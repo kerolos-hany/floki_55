@@ -1,5 +1,5 @@
+import 'package:floki/layout/home_layout.dart';
 import 'package:flutter/material.dart';
-import 'modules/home_screen/homa_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xff170b66),
       ),
-      home: HomeScreen(),
+      home: HomeLayout(0), //FirstPage(0),HomePage(1),
     );
   }
 }

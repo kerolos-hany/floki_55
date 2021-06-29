@@ -10,12 +10,10 @@ class SideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //var scaffoldKey = GlobalKey<ScaffoldState>();
     return SafeArea(
       child: Drawer(
         child: Container(
           decoration: BoxDecoration(
-            //color: Theme.of(context).primaryColor
             gradient: LinearGradient(
                 colors: [Theme.of(context).primaryColor,Colors.purple[700]],
                 begin: Alignment.bottomRight,

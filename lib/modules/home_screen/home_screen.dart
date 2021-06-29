@@ -1,11 +1,10 @@
-import 'package:floki/modules/home_screen/restaurant_screen.dart';
-import 'package:floki/layout/sidebar.dart';
+import 'package:floki/layout/home_layout.dart';
+import 'package:floki/modules/restaurants_screens/buffalo_burger_screen.dart';
 import 'package:flutter/material.dart';
 import '../../models/restaurant/restaurants_model.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
   double screenWidth;
   BuildContext context;
   var _searchBarController = TextEditingController();
@@ -37,33 +36,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context = this.context;
 
-    return Scaffold(
-        key: scaffoldKey,
-        appBar: PreferredSize(
-          child: AppBar(
-            elevation: 30,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("Assets/Images/AppBarBackground2.jpeg"),
-                    fit: BoxFit.cover),
-              ),
-            ),
-            leading: IconButton(
-              icon: Icon(
-                Icons.view_list_rounded,
-                color: Color(0xfff5cb25),
-                size: 50,
-              ),
-              onPressed: () {
-                scaffoldKey.currentState.openDrawer();
-              },
-            ),
-          ),
-          preferredSize: Size.fromHeight(65),
-        ),
-        drawer: SideBar(),
-        body: Container(
+    return Container(
           color: Colors.purple[50],
           width: double.infinity,
           child: Padding(
@@ -75,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                     width: 350,
                     height: 30,
-//              clipBehavior: Clip.antiAliasWithSaveLayer,
+//                  clipBehavior: Clip.antiAliasWithSaveLayer,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -124,42 +97,41 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        );
   }
 
-  Widget _buildRestaurantItem(restaurant, context)
-  {
+  Widget _buildRestaurantItem(restaurant, context) {
     screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RestaurantScreen(),
-            ),
-          );
-        },
-        child: Container(
-          width: (screenWidth - 60) / 2,
-          height: 170,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.4),
-                spreadRadius: 1,
-                blurRadius: 1,
-                offset: Offset(1.5, 2),
-              ),
-            ],
-            image: DecorationImage(
-                image: restaurant.imagePath.substring(0, 6) == "Assets"
-                    ? AssetImage(restaurant.imagePath)
-                    : NetworkImage(restaurant.imagePath),
-                fit: BoxFit.cover),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeLayout(2),
           ),
+        );
+      },
+      child: Container(
+        width: (screenWidth - 60) / 2,
+        height: 170,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(1.5, 2),
+            ),
+          ],
+          image: DecorationImage(
+              image: restaurant.imagePath.substring(0, 6) == "Assets"
+                  ? AssetImage(restaurant.imagePath)
+                  : NetworkImage(restaurant.imagePath),
+              fit: BoxFit.cover),
         ),
-      );
+      ),
+    );
   }
 }
