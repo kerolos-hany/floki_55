@@ -23,6 +23,6 @@ Widget appBar({@required scaffoldKey})
         },
       ),
     ),
-    preferredSize: Size.fromHeight(65),
+    preferredSize: Size.fromHeight(55),
   );
 }

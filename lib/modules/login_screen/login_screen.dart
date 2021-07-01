@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 // print ("hello");
-class LogInPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LogInPage> {
+class _LoginFormState extends State<LoginScreen> {
 
   bool _isHidden = true;
   String email, password;
@@ -22,6 +22,7 @@ class _LoginFormState extends State<LogInPage> {
     return Scaffold(
       //backgroundColor: Colors.white,
       body: Container(
+        // width: double.infinity,
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('Assets/Images/signup.jpeg'), fit: BoxFit.fill)),

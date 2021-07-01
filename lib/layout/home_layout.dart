@@ -28,8 +28,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   Map screens = {
     0: FirstPage(),
     1: HomeScreen(),
-    2 : restaurantScreens[0],
-    3 : menuScreens[0],
+    2 : menuScreens[0],
   };
 
   @override

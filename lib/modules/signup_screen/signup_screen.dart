@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SignUp extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<SignUp> {
+class _LoginFormState extends State<SignupScreen> {
   bool _isHidden = true;
   String email, password, phoneNumber;
 

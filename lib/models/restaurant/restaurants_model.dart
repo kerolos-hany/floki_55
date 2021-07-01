@@ -1,5 +1,6 @@
 class RestaurantsModel
 {
   final String imagePath;
-  RestaurantsModel({this.imagePath});
+  final int id;
+  RestaurantsModel({this.imagePath ,this.id});
 }
