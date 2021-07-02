@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:floki/indoor/qrcode_scanner.dart';
 import 'package:floki/layout/home_layout.dart';
 import 'package:floki/modules/menus_screens/cubit/bloc_observer.dart';
 import 'package:flutter/material.dart';
+import 'indoor/qrcode_creator.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -10,7 +12,6 @@ void main() {
 
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  var secondaryColor = Color(0xfff5cb25);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xff170b66),
       ),
-      home: HomeLayout(3), //FirstPage(0),HomePage(1),
+      home: QrCodeCreator(), //FirstPage(0),HomePage(1),
     );
   }
 }

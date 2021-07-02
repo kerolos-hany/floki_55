@@ -34,7 +34,7 @@ Widget buildSearchBar({@required controller}) {
         child: Container(
           width: 350,
           height: 30,
-//                  clipBehavior: Clip.antiAliasWithSaveLayer,
+//        clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -116,7 +116,7 @@ Widget buildFiltersRow(context,List <FilterModel> filters)
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: MyApp().secondaryColor,
+                      color: secondaryColor,
                     ),
                   ),
                 ],
@@ -168,7 +168,7 @@ Widget buildFiltersRow(context,List <FilterModel> filters)
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: MyApp().secondaryColor,
+                      color: secondaryColor,
                     ),
                   ),
                 ],
@@ -220,7 +220,7 @@ Widget buildFiltersRow(context,List <FilterModel> filters)
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: MyApp().secondaryColor,
+                      color: secondaryColor,
                     ),
                   ),
                 ],
@@ -292,7 +292,7 @@ Widget buildMenuItem(MenuItemModel item, context) {
                     Icon(
                       Icons.star,
                       size: 30.0,
-                      color: MyApp().secondaryColor,
+                      color: secondaryColor,
                     ),
                     Text(
                       "${item.rate}",
@@ -345,7 +345,7 @@ Widget buildMenuItem(MenuItemModel item, context) {
                   Text(
                     "${item.itemCount}",
                     style: TextStyle(
-                      color: MyApp().secondaryColor,
+                      color: secondaryColor,
                       fontSize: 30,
                     ),
                   ),

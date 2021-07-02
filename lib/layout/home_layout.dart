@@ -1,22 +1,9 @@
 import 'package:floki/layout/app_bar.dart';
-import 'package:floki/modules/first_page/first_page.dart';
-import 'package:floki/modules/home_screen/home_screen.dart';
+import 'package:floki/modules/first_page/first_screen.dart';
+import 'package:floki/outdoor/home_screen/home_screen.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
-//  CircleAvatar(
-//    child: ClipOval(
-//    child: _userImage("Images/image.jpeg"),
-//   ),
-//  ),
-// Widget _userImage(String path) {
-//      return Image(
-//        image: AssetImage(path),
-//        width: 90,
-//        height: 90,
-//        fit: BoxFit.cover,
-//      );
-//    }
 // ignore: must_be_immutable
 class HomeLayout extends StatefulWidget {
 
@@ -54,3 +41,17 @@ class _HomeLayoutState extends State<HomeLayout> {
     );
   }
 }
+
+//  CircleAvatar(
+//    child: ClipOval(
+//    child: _userImage("Images/image.jpeg"),
+//   ),
+//  ),
+// Widget _userImage(String path) {
+//      return Image(
+//        image: AssetImage(path),
+//        width: 90,
+//        height: 90,
+//        fit: BoxFit.cover,
+//      );
+//    }

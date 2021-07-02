@@ -1,5 +1,5 @@
+import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
-import '../../main.dart';
 
 // ignore: must_be_immutable
 class FirstPage extends StatelessWidget {
@@ -46,7 +46,7 @@ class FirstPage extends StatelessWidget {
             child: Text(name,
                 style: TextStyle(
                     fontSize: 22,
-                    color: MyApp().secondaryColor,
+                    color: secondaryColor,
                     fontWeight: FontWeight.w800)),
             onPressed: () {
               onPress();
