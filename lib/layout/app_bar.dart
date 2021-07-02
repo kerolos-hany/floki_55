@@ -12,16 +12,6 @@ Widget appBar({@required scaffoldKey})
               fit: BoxFit.cover),
         ),
       ),
-      leading: IconButton(
-        icon: Icon(
-          Icons.view_list_rounded,
-          color: Color(0xfff5cb25),
-          size: 50,
-        ),
-        onPressed: () {
-          scaffoldKey.currentState.openDrawer();
-        },
-      ),
     ),
     preferredSize: Size.fromHeight(55),
   );

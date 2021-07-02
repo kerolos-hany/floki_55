@@ -1,10 +1,22 @@
 import 'package:floki/layout/app_bar.dart';
-import 'package:floki/layout/sidebar.dart';
 import 'package:floki/modules/first_page/first_page.dart';
 import 'package:floki/modules/home_screen/home_screen.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
+//  CircleAvatar(
+//    child: ClipOval(
+//    child: _userImage("Images/image.jpeg"),
+//   ),
+//  ),
+// Widget _userImage(String path) {
+//      return Image(
+//        image: AssetImage(path),
+//        width: 90,
+//        height: 90,
+//        fit: BoxFit.cover,
+//      );
+//    }
 // ignore: must_be_immutable
 class HomeLayout extends StatefulWidget {
 
@@ -28,7 +40,8 @@ class _HomeLayoutState extends State<HomeLayout> {
   Map screens = {
     0: FirstPage(),
     1: HomeScreen(),
-    2 : menuScreens[0],
+    2 : outdoorMenuScreens[0],
+    3 : indoorMenuScreens[0],
   };
 
   @override
@@ -37,7 +50,6 @@ class _HomeLayoutState extends State<HomeLayout> {
     return Scaffold(
       key: scaffoldKey,
       appBar: appBar(scaffoldKey: scaffoldKey),
-      drawer: SideBar(),
       body: screens[index],
     );
   }
