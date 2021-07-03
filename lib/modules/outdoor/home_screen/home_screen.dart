@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => HomeLayout(
-              screenIndex: restaurant.id < indoorMenuScreens.length? 2: 5,
+              screenIndex: restaurant.id < indoorMenuScreens.length? 2: 4,
               menuScreenIndex: restaurant.id < indoorMenuScreens.length? restaurant.id: 0,
             ),
           ),

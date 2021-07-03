@@ -22,8 +22,8 @@ class HomeLayout extends StatelessWidget {
       1 : HomeScreen(),
       2 : outdoorMenuScreens[menuScreenIndex],
       3 : indoorMenuScreens[menuScreenIndex],
-      5 : NotCreatedYet(),
-      6 : QrCodeErrorScreen(),
+      4 : NotCreatedYet(),
+      5 : QrCodeErrorScreen(),
     };
 
     var scaffoldKey = GlobalKey<ScaffoldState>();

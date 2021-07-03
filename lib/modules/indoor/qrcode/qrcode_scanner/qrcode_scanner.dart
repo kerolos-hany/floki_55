@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:floki/layout/home_layout.dart';
-import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_error_screen.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -55,42 +54,41 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
           print(resultBarCode);
           _qrCodeTableNumber(resultBarCode);
           _qrCodeRestaurantName(resultBarCode);
-          // print(orderTableNumber);
-          // print(orderRestaurantName);
         });
       },
       overlay: QrScannerOverlayShape(
-        borderLength: 20,
-        borderRadius: 10,
-        borderWidth: 10,
+        borderLength: 50,
+        borderRadius: 30,
+        borderWidth: 15,
         borderColor: secondaryColor,
-        cutOutSize: MediaQuery.of(context).size.width * 0.8,
+        cutOutSize: MediaQuery.of(context).size.width * 0.85,
       ),
     );
   }
 
   void _qrCodeTableNumber(String resultBarCode) {
     orderTableNumber = resultBarCode.substring(0, 2);
-    print(orderTableNumber);
     }
 
   void _qrCodeRestaurantName(String resultBarCode) {
     int stringLength = resultBarCode.length;
     restaurantIndexString = resultBarCode.substring(2, stringLength);
 
-    if(int.parse(restaurantIndexString) == null)
+    if(int.tryParse(restaurantIndexString) == null)
       {
         if (!scanned) {
           scanned = true;
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => QrCodeErrorScreen(),
+                  builder: (context) => HomeLayout(screenIndex: 5),
               ),
-          );
+          ).then((value) {
+            scanned = false;
+          });
         }
       }
-    else
+    else if(int.tryParse(restaurantIndexString) != null)
       {
         int restaurantIndex = int.parse(restaurantIndexString);
 
@@ -100,7 +98,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
             context,
             MaterialPageRoute(
               builder: (context) => HomeLayout(
-                screenIndex: restaurantIndex < indoorMenuScreens.length? 3: 5,
+                screenIndex: restaurantIndex < indoorMenuScreens.length? 3: 4,
                 menuScreenIndex: restaurantIndex < indoorMenuScreens.length? restaurantIndex : 0,
               ),
             ),
