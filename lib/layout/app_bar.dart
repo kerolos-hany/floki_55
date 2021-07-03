@@ -1,8 +1,65 @@
+import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
-Widget appBar({@required scaffoldKey}) {
+Widget appBar({@required scaffoldKey, @required context}) {
   return PreferredSize(
     child: AppBar(
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.list_rounded,
+            color: secondaryColor,
+          ),
+          iconSize: 55,
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => new AlertDialog(
+                contentTextStyle: TextStyle(
+                    color: secondaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                backgroundColor:
+                    Theme.of(context).primaryColor.withOpacity(0.9),
+//                  titleTextStyle: TextStyle(color: secondaryColor),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                // title: Text("Your Data"),
+                content: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "User Name",
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              "UserEmail@gmail.com",
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20,),
+                    Text("Hello"),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ],
       elevation: 30,
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -11,20 +68,7 @@ Widget appBar({@required scaffoldKey}) {
               fit: BoxFit.cover),
         ),
       ),
-      actions: [
-        GestureDetector(
-          onTap: () {print("Avatar");},
-          child: CircleAvatar(
-            radius: 35,
-            child: ClipOval(
-              child: Image(
-                image: AssetImage("Assets/Images/profile avatar.jpeg"),
-              ),
-            ),
-          ),
-        ),
-      ],
     ),
-    preferredSize: Size.fromHeight(60),
+    preferredSize: Size.fromHeight(55),
   );
 }

@@ -29,7 +29,7 @@ class HomeLayout extends StatelessWidget {
     var scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
-      appBar: appBar(scaffoldKey: scaffoldKey),
+      appBar: appBar(scaffoldKey: scaffoldKey,context: context),
       body: screens[screenIndex],
     );
   }
