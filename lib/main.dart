@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xff170b66),
       ),
       home: HomeLayout(screenIndex: 0,menuScreenIndex: 0,),
-      //0 : FirstPage(), 1 : HomePage(), 2,0 : OutdoorMenusScreens(0), 3,0 IndoorMenuScreens(0)
-      //4 :
+      //0 : FirstPage(), 1 : HomePage(), 2,0 : outdoorMenuScreens(0), 3,0 indoorMenuScreens(0)
+      //4 : NotCreatedYet(), 5 : QrCodeErrorScreen(),
     );
   }
 }
