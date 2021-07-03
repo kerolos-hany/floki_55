@@ -1,7 +1,7 @@
 import 'package:floki/main.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menu_screens_creators/cubit/cubit.dart';
+import 'package:floki/shared/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -75,7 +75,7 @@ Widget buildFiltersRow(context,List <FilterModel> filters)
     children: [
       GestureDetector(
         onTap: () {
-          MenuCubit.get(context).filterOnTap(context,filters[0]);
+          AppCubit.get(context).filterOnTap(context,filters[0]);
         },
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -127,7 +127,7 @@ Widget buildFiltersRow(context,List <FilterModel> filters)
       ),
       GestureDetector(
         onTap: () {
-            MenuCubit.get(context).filterOnTap1(context, filters[1]);
+            AppCubit.get(context).filterOnTap1(context, filters[1]);
           },
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -179,7 +179,7 @@ Widget buildFiltersRow(context,List <FilterModel> filters)
       ),
       GestureDetector(
         onTap: () {
-          MenuCubit.get(context).filterOnTap2(context, filters[2]);
+          AppCubit.get(context).filterOnTap2(context, filters[2]);
         },
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -330,7 +330,7 @@ Widget buildMenuItem(MenuItemModel item, context) {
                 children: [
                   FloatingActionButton(
                     onPressed: () {
-                      MenuCubit.get(context).removeItem(item);
+                      AppCubit.get(context).removeItem(item);
                     },
                     mini: true,
                     backgroundColor: Colors.white,
@@ -354,7 +354,7 @@ Widget buildMenuItem(MenuItemModel item, context) {
                   ),
                   FloatingActionButton(
                     onPressed: () {
-                      MenuCubit.get(context).addItem(item);
+                      AppCubit.get(context).addItem(item);
                     },
                     mini: true,
                     backgroundColor: Colors.white,

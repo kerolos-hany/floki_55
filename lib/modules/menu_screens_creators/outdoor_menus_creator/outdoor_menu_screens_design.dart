@@ -1,8 +1,8 @@
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menu_screens_creators/cubit/cubit.dart';
-import 'package:floki/modules/menu_screens_creators/cubit/states.dart';
+import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
+import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,8 +24,8 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
     this.context = context;
 
     return BlocProvider(
-        create: (context) => MenuCubit(),
-        child: BlocConsumer<MenuCubit, MenuCubitStates>(
+        create: (context) => AppCubit(),
+        child: BlocConsumer<AppCubit, AppCubitStates>(
           listener: (context, state) {},
           builder: (context, state) => Stack(
             alignment: Alignment.bottomCenter,
@@ -64,10 +64,10 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: DropdownButton<String>(
-                                    value: MenuCubit.get(context).chosenBranch,
+                                    value: AppCubit.get(context).chosenBranch,
                                     onChanged: (String newValue) {
-                                      MenuCubit.get(context).chosenBranch = newValue;
-                                      MenuCubit.get(context).emit(MenuDropDownState());
+                                      AppCubit.get(context).chosenBranch = newValue;
+                                      AppCubit.get(context).emit(MenuDropDownState());
                                     },
                                     style: TextStyle(
                                       color: secondaryColor,

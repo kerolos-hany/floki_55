@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:floki/layout/home_layout.dart';
-import 'package:floki/modules/menu_screens_creators/cubit/bloc_observer.dart';
+import 'package:floki/modules/indoor/qrcode_creator.dart';
+import 'package:floki/shared/cubit/bloc_observer.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xff170b66),
       ),
-      home: HomeLayout(0), //FirstPage(0),HomePage(1),
+      home: QrCodeCreator(), //FirstPage(0),HomePage(1),
     );
   }
 }

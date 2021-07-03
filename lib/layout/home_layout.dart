@@ -5,39 +5,28 @@ import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class HomeLayout extends StatefulWidget {
+class HomeLayout extends StatelessWidget {
 
-  int index = 0;
-  HomeLayout (int index)
-  {
-    this.index = index;
-  }
+  final int screenIndex;
+  final int MenuScreenIndex;
 
-  @override
-  _HomeLayoutState createState() => _HomeLayoutState(index);
-}
-
-class _HomeLayoutState extends State<HomeLayout> {
-
-  int index;
-  _HomeLayoutState (index)
-  {
-    this.index = index;
-  }
-  Map screens = {
-    0: FirstPage(),
-    1: HomeScreen(),
-    2 : outdoorMenuScreens[0],
-    3 : indoorMenuScreens[0],
-  };
+  HomeLayout ({@required this.screenIndex, this.MenuScreenIndex = 0});
 
   @override
   Widget build(BuildContext context) {
+
+    Map screens = {
+      0 : FirstPage(),
+      1 : HomeScreen(),
+      2 : outdoorMenuScreens[MenuScreenIndex],
+      3 : indoorMenuScreens[MenuScreenIndex],
+    };
+
     var scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
       appBar: appBar(scaffoldKey: scaffoldKey),
-      body: screens[index],
+      body: screens[screenIndex],
     );
   }
 }

@@ -9,9 +9,6 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
 
-    Widget _inDoorButton = _buildButton("In door", _inDoorButtonFunc);
-    Widget _outDoorButton = _buildButton("Out door", _outDoorButtonFunc);
-
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -23,8 +20,8 @@ class FirstPage extends StatelessWidget {
           child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _inDoorButton,
-            _outDoorButton,
+            _buildButton("In door", _inDoorButtonFunc),
+            _buildButton("Out door", _outDoorButtonFunc),
           ],
         ),
       )),
@@ -56,7 +53,7 @@ class FirstPage extends StatelessWidget {
   }
 
   void _inDoorButtonFunc() {
-    print("InDoor");
+
   }
 
   void _outDoorButtonFunc() {

@@ -1,17 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menu_screens_creators/cubit/states.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'states.dart';
 
-class MenuCubit extends Cubit<MenuCubitStates> {
-  MenuCubit() : super(MenuInitialState());
+class AppCubit extends Cubit<AppCubitStates> {
+  AppCubit() : super(AppInitialState());
 
   String chosenBranch = branches[0];
 
-  static MenuCubit get(context) => BlocProvider.of(context);
+  static AppCubit get(context) => BlocProvider.of(context);
 
   void filterOnTap(context, FilterModel filter) {
     if (filter.id == 0) {
