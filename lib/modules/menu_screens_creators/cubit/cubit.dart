@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menus_screens/cubit/states.dart';
+import 'package:floki/modules/menu_screens_creators/cubit/states.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

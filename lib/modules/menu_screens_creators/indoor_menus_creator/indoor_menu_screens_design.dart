@@ -1,54 +1,22 @@
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menus_screens/cubit/cubit.dart';
-import 'package:floki/modules/menus_screens/cubit/states.dart';
+import 'package:floki/modules/menu_screens_creators/cubit/cubit.dart';
+import 'package:floki/modules/menu_screens_creators/cubit/states.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class McdonaldsIndoorMenu extends StatelessWidget {
-  var searchBarController = TextEditingController();
+class IndoorMenuScreensCreator extends StatelessWidget {
+  var searchBarController;
+  List<MenuItemModel> items;
+  BuildContext context;
 
-  List<MenuItemModel> items = [
-    MenuItemModel(
-        name: "Big Mac",
-        price: 150.99,
-        rate: 4.0,
-        type: "Sandwich",
-        itemCount: 0,
-        image: "Assets/Images/Black Jack.jpg"),
-    MenuItemModel(
-        name: "Cheese burger",
-        price: 155.99,
-        rate: 4.0,
-        type: "Sandwich",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Fries",
-        price: 150,
-        rate: 4.0,
-        type: "Side Dish",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Salad",
-        price: 150,
-        rate: 4.0,
-        type: "Side Dish",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Milk Shake",
-        price: 150,
-        rate: 4.0,
-        type: "Beverages",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Pepsi",
-        price: 10,
-        rate: 4.0,
-        type: "Beverages",
-        image: "Image Path"),
-  ];
+  IndoorMenuScreensCreator({
+    @required this.items,
+    @required this.searchBarController,
+    @required this.context,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +29,8 @@ class McdonaldsIndoorMenu extends StatelessWidget {
           children: [
             SingleChildScrollView(
               child: Container(
-                color: Colors.purple[50],
-                width: double.infinity,
+                color: Colors.white,
+                width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20.0, horizontal: 10),
@@ -108,7 +76,9 @@ class McdonaldsIndoorMenu extends StatelessWidget {
                 // ignore: deprecated_member_use
                 child: RaisedButton(
                   color: secondaryColor,
-                  onPressed: () {print("Submitted");},
+                  onPressed: () {
+                    print("Submitted");
+                  },
                   textColor: Theme.of(context).primaryColor,
                   child: Center(
                     child: Text(

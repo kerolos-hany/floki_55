@@ -1,7 +1,7 @@
 import 'package:floki/main.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menus_screens/cubit/cubit.dart';
+import 'package:floki/modules/menu_screens_creators/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 

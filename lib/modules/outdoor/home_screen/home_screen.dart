@@ -1,7 +1,7 @@
 import 'package:floki/layout/home_layout.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:flutter/material.dart';
-import '../../models/restaurant/restaurants_model.dart';
+import '../../../models/restaurant/restaurants_model.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {

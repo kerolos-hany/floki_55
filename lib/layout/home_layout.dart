@@ -1,6 +1,6 @@
 import 'package:floki/layout/app_bar.dart';
-import 'package:floki/modules/first_page/first_screen.dart';
-import 'package:floki/outdoor/home_screen/home_screen.dart';
+import 'package:floki/modules/first_screen/first_screen.dart';
+import 'package:floki/modules/outdoor/home_screen/home_screen.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 

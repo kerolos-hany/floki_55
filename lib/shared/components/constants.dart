@@ -1,12 +1,12 @@
 import 'package:floki/models/filters_model.dart';
-import 'package:floki/modules/menus_screens/outdoor_menus/outdoor_menu_screens_design.dart';
-import 'package:floki/modules/menus_screens/indoor_menus/indoor_menu_screens_design.dart';
+import 'package:floki/modules/indoor/indoor_menus_screens/buffalo_indoor_menu.dart';
+import 'package:floki/modules/outdoor/outdoor_menus_screens/heart_attack_outdoor_menu.dart';
 import 'package:flutter/material.dart';
 
 Color secondaryColor = Color(0xfff5cb25);
 
-List<Widget> outdoorMenuScreens = [BuffaloMenuScreen(),];
-List<Widget> indoorMenuScreens = [McdonaldsIndoorMenu(),];
+List<Widget> outdoorMenuScreens = [HeartAttackOutdoorMenu(),];
+List<Widget> indoorMenuScreens = [BuffaloIndoorMenu(),];
 
 bool tapped0 = false;
 bool tapped1 = false;

@@ -1,55 +1,23 @@
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/modules/menus_screens/cubit/cubit.dart';
-import 'package:floki/modules/menus_screens/cubit/states.dart';
+import 'package:floki/modules/menu_screens_creators/cubit/cubit.dart';
+import 'package:floki/modules/menu_screens_creators/cubit/states.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class BuffaloMenuScreen extends StatelessWidget {
-  BuildContext context;
-  var searchBarController = TextEditingController();
+class OutdoorMenuScreensCreator extends StatelessWidget {
 
-  List<MenuItemModel> items = [
-    MenuItemModel(
-        name: "Big Mac",
-        price: 150.99,
-        rate: 4.0,
-        type: "Sandwich",
-        itemCount: 0,
-        image: "Assets/Images/Black Jack.jpg"),
-    MenuItemModel(
-        name: "Cheese burger",
-        price: 155.99,
-        rate: 4.0,
-        type: "Sandwich",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Fries",
-        price: 150,
-        rate: 4.0,
-        type: "Side Dish",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Salad",
-        price: 150,
-        rate: 4.0,
-        type: "Side Dish",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Milk Shake",
-        price: 150,
-        rate: 4.0,
-        type: "Beverages",
-        image: "Image Path"),
-    MenuItemModel(
-        name: "Pepsi",
-        price: 10,
-        rate: 4.0,
-        type: "Beverages",
-        image: "Image Path"),
-  ];
+  BuildContext context;
+  var searchBarController;
+  List<MenuItemModel> items;
+
+  OutdoorMenuScreensCreator({
+    @required this.searchBarController,
+    @required this.items,
+    @required this.context,
+});
 
   @override
   Widget build(BuildContext context) {

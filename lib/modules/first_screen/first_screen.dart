@@ -15,7 +15,7 @@ class FirstPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-        image: AssetImage("Images/Background.jpg"),
+        image: AssetImage("Assets/Images/Background.jpg"),
         fit: BoxFit.fill,
       )),
       child: Center(
