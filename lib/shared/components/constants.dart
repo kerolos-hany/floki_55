@@ -32,5 +32,5 @@ int chairs = 0;
 int tables = 0;
 
 String orderTableNumber = "";
-String orderRestaurantName = "";
 String resultBarCode;
+

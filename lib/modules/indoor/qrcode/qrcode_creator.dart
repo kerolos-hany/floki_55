@@ -1,9 +1,10 @@
-import 'package:floki/modules/indoor/qrcode_cubit/qrcode_cubit.dart';
-import 'package:floki/modules/indoor/qrcode_cubit/qrcode_states.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
+import 'qrcode_cubit/qrcode_cubit.dart';
+import 'qrcode_cubit/qrcode_states.dart';
 
 // ignore: must_be_immutable
 class QrCodeCreator extends StatelessWidget {

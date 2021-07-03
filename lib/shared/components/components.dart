@@ -69,8 +69,7 @@ Widget buildSearchBar({@required controller}) {
   );
 }
 
-Widget buildFiltersRow(context,List <FilterModel> filters)
-{
+Widget buildFiltersRow(context,List <FilterModel> filters) {
   return Row(
     children: [
       GestureDetector(
@@ -369,6 +368,37 @@ Widget buildMenuItem(MenuItemModel item, context) {
           ],
         ),
       ],
+    ),
+  );
+}
+
+Widget buildErrorScreen(String text,context){
+  return Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Container(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 150,
+          ),
+          Container(
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 80,
+          ),
+          Icon(Icons.error_outline,color: Theme.of(context).primaryColor,size: 250,),
+        ],
+      ),
     ),
   );
 }

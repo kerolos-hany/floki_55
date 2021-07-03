@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:floki/layout/home_layout.dart';
+import 'package:floki/modules/indoor/qrcode/qrcode_creator.dart';
+import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_scanner.dart';
 import 'package:floki/shared/cubit/bloc_observer.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xff170b66),
       ),
-      home: HomeLayout(screenIndex: 1,MenuScreenIndex: 0,), //FirstPage(0),HomePage(1),
+      home: HomeLayout(screenIndex: 0,menuScreenIndex: 0,), //FirstPage(0),HomePage(1),
     );
   }
 }
-
-// Shortcuts:
-// Use ctrl+Alt+l to reformat the code
-// Use ctrl+d to copy the line that you are standing at

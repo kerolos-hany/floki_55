@@ -7,3 +7,4 @@ class MenuFilter2State extends AppCubitStates {}
 class MenuDropDownState extends AppCubitStates {}
 class MenuRemoveItemState extends AppCubitStates {}
 class MenuAddItemState extends AppCubitStates {}
+class RestaurantItemsState extends AppCubitStates {}

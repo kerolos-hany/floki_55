@@ -1,7 +1,11 @@
 import 'package:floki/layout/home_layout.dart';
 import 'package:floki/models/restaurant/restaurants_model.dart';
 import 'package:floki/shared/components/components.dart';
+import 'package:floki/shared/components/constants.dart';
+import 'package:floki/shared/cubit/cubit.dart';
+import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -15,40 +19,44 @@ class HomeScreen extends StatelessWidget {
     RestaurantsModel(imagePath: "Assets/Images/Buffalo Burger.png", id: 3),
     RestaurantsModel(imagePath: "Assets/Images/Mcdonalds.png", id: 4),
     RestaurantsModel(imagePath: "Assets/Images/Heart Attack.png", id: 5),
-    RestaurantsModel(imagePath: "Assets/Images/Buffalo Burger.png", id: 6),
-    RestaurantsModel(imagePath: "Assets/Images/Mcdonalds.png", id: 7),
-    RestaurantsModel(imagePath: "Assets/Images/Heart Attack.png", id: 8),
-    RestaurantsModel(imagePath: "Assets/Images/Buffalo Burger.png", id: 8),
   ];
 
   @override
   Widget build(BuildContext context) {
     context = this.context;
 
-    return Container(
-      color: Colors.purple[50],
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildSearchBar(controller: searchBarController),
-            SizedBox(
-              height: 20.0,
+    return BlocProvider  (
+      create: (context) => AppCubit(),
+      child: BlocConsumer <AppCubit,AppCubitStates>(
+        listener: (context, state) {},
+        builder: (context, state) => Container(
+          color: Colors.white,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildSearchBar(controller: searchBarController),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Expanded(
+                  child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                      ),
+                      itemBuilder: (context, index) {
+                        return _buildRestaurantItem(restaurants[index], context);
+                        AppCubit.get(context).emit(RestaurantItemsState());
+                        },
+                      itemCount: restaurants.length),
+                )
+              ],
             ),
-            Expanded(
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                  ),
-                  itemBuilder: (context, index) =>
-                      _buildRestaurantItem(restaurants[index], context),
-                  itemCount: restaurants.length),
-            )
-          ],
+          ),
         ),
       ),
     );
@@ -64,8 +72,8 @@ class HomeScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => HomeLayout(
-              screenIndex: 2,
-              MenuScreenIndex: restaurant.id,
+              screenIndex: restaurant.id < indoorMenuScreens.length? 2: 5,
+              menuScreenIndex: restaurant.id < indoorMenuScreens.length? restaurant.id: 0,
             ),
           ),
         );

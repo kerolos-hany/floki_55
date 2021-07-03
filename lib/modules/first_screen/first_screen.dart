@@ -1,3 +1,5 @@
+import 'package:floki/layout/home_layout.dart';
+import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_scanner.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class FirstPage extends StatelessWidget {
       )),
       child: Center(
           child: SingleChildScrollView(
-          child: Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildButton("In door", _inDoorButtonFunc),
@@ -53,11 +55,21 @@ class FirstPage extends StatelessWidget {
   }
 
   void _inDoorButtonFunc() {
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => QrCodeScanner(),
+      ),
+    );
   }
 
   void _outDoorButtonFunc() {
-    print("OutDoor");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeLayout(screenIndex: 1),
+      ),
+    );
   }
 }
 

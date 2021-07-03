@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:floki/layout/home_layout.dart';
+import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_error_screen.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -10,6 +12,7 @@ class QrCodeScanner extends StatefulWidget {
 
 class _QrCodeScannerState extends State<QrCodeScanner> {
   var qrKey = GlobalKey(debugLabel: 'QR');
+  String restaurantIndexString;
 
   Barcode barcode;
   BuildContext context;
@@ -36,6 +39,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     this.context = context;
     return buildQrScanner(context);
   }
+  bool scanned = false;
 
   Widget buildQrScanner(context) {
     return QRView(
@@ -67,10 +71,43 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
   void _qrCodeTableNumber(String resultBarCode) {
     orderTableNumber = resultBarCode.substring(0, 2);
+    print(orderTableNumber);
     }
 
   void _qrCodeRestaurantName(String resultBarCode) {
     int stringLength = resultBarCode.length;
-    orderRestaurantName = resultBarCode.substring(2, stringLength);
+    restaurantIndexString = resultBarCode.substring(2, stringLength);
+
+    if(int.parse(restaurantIndexString) == null)
+      {
+        if (!scanned) {
+          scanned = true;
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => QrCodeErrorScreen(),
+              ),
+          );
+        }
+      }
+    else
+      {
+        int restaurantIndex = int.parse(restaurantIndexString);
+
+        if (!scanned) {
+          scanned = true;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeLayout(
+                screenIndex: restaurantIndex < indoorMenuScreens.length? 3: 5,
+                menuScreenIndex: restaurantIndex < indoorMenuScreens.length? restaurantIndex : 0,
+              ),
+            ),
+          ).then((value) {
+            scanned = false;
+          });
+        }
+      }
   }
 }
