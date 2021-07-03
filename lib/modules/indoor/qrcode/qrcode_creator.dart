@@ -39,7 +39,7 @@ class QrCodeCreator extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 200,
+                      height: 150,
                     ),
                     Container(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -49,13 +49,13 @@ class QrCodeCreator extends StatelessWidget {
                       ),
                       child: QrImage(
                         data: controller.text,
-                        size: 200,
+                        size: 225,
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 150,
                     ),
                     buildTextField(context),
                   ],

@@ -19,7 +19,7 @@ class FirstPage extends StatelessWidget {
       )),
       child: Center(
           child: SingleChildScrollView(
-        child: Column(
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildButton("In door", _inDoorButtonFunc),

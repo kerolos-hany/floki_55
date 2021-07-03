@@ -34,17 +34,3 @@ class HomeLayout extends StatelessWidget {
     );
   }
 }
-
-//  CircleAvatar(
-//    child: ClipOval(
-//    child: _userImage("Images/image.jpeg"),
-//   ),
-//  ),
-// Widget _userImage(String path) {
-//      return Image(
-//        image: AssetImage(path),
-//        width: 90,
-//        height: 90,
-//        fit: BoxFit.cover,
-//      );
-//    }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget appBar({@required scaffoldKey})
-{
+Widget appBar({@required scaffoldKey}) {
   return PreferredSize(
     child: AppBar(
       elevation: 30,
@@ -12,7 +11,20 @@ Widget appBar({@required scaffoldKey})
               fit: BoxFit.cover),
         ),
       ),
+      actions: [
+        GestureDetector(
+          onTap: () {print("Avatar");},
+          child: CircleAvatar(
+            radius: 35,
+            child: ClipOval(
+              child: Image(
+                image: AssetImage("Assets/Images/profile avatar.jpeg"),
+              ),
+            ),
+          ),
+        ),
+      ],
     ),
-    preferredSize: Size.fromHeight(55),
+    preferredSize: Size.fromHeight(60),
   );
 }
