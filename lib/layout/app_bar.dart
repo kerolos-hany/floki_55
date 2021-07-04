@@ -52,7 +52,6 @@ Widget appBar({@required scaffoldKey, @required context}) {
                       ],
                     ),
                     SizedBox(height: 20,),
-                    Text("Hello"),
                   ],
                 ),
               ),

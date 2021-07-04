@@ -1,4 +1,6 @@
 import 'package:floki/layout/app_bar.dart';
+import 'package:floki/modules/checkout_screens/checkout_screen/checkout_screen.dart';
+import 'package:floki/modules/checkout_screens/pay_by_visa/pay_by_visa.dart';
 import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_error_screen.dart';
 import 'package:floki/modules/outdoor/home_screen/error_not_created_yet_screen.dart';
@@ -24,6 +26,8 @@ class HomeLayout extends StatelessWidget {
       3 : indoorMenuScreens[menuScreenIndex],
       4 : NotCreatedYet(),
       5 : QrCodeErrorScreen(),
+      6 : CheckOut(),
+      7 : PayByVisaScreen(),
     };
 
     var scaffoldKey = GlobalKey<ScaffoldState>();

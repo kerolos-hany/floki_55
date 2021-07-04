@@ -1,4 +1,5 @@
 import 'package:floki/models/filters_model.dart';
+import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/modules/indoor/indoor_menus_screens/buffalo_indoor_menu.dart';
 import 'package:floki/modules/outdoor/outdoor_menus_screens/heart_attack_outdoor_menu.dart';
 import 'package:flutter/material.dart';
@@ -34,3 +35,7 @@ int tables = 0;
 String orderTableNumber = "";
 String resultBarCode;
 
+List<SelectedItemsModel> selectedItems = [
+  SelectedItemsModel(name: "Big Mac", count: 1, price: 150),
+  SelectedItemsModel(name: "Cheese Burger", count: 4, price: 30),
+];

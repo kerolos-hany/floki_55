@@ -1,5 +1,5 @@
 import 'package:floki/layout/home_layout.dart';
-import 'package:floki/models/restaurant/restaurants_model.dart';
+import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:floki/shared/cubit/cubit.dart';

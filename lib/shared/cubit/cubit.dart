@@ -10,6 +10,8 @@ class AppCubit extends Cubit<AppCubitStates> {
   AppCubit() : super(AppInitialState());
 
   String chosenBranch = branches[0];
+  var chairsNumber = 0;
+  var tablesNumber = 0;
 
   static AppCubit get(context) => BlocProvider.of(context);
 
@@ -75,9 +77,35 @@ class AppCubit extends Cubit<AppCubitStates> {
       emit(MenuRemoveItemState());
     }
   }
+
   void addItem (MenuItemModel item){
       item.itemCount++;
       print(item.itemCount);
       emit(MenuAddItemState());
+  }
+
+  void tablesNumberIncrement()
+  {
+    tablesNumber++;
+    emit(TablesNumberState());
+  }
+  void tablesNumberDecrement()
+  {
+    if (tablesNumber > 0) {
+      tablesNumber--;
+      emit(TablesNumberState());
+    }
+  }
+  void chairsNumberIncrement()
+  {
+    chairsNumber++;
+    emit(ChairsNumberState());
+  }
+  void chairsNumberDecrement()
+  {
+    if (chairsNumber > 0) {
+      chairsNumber--;
+      emit(ChairsNumberState());
+    }
   }
 }
