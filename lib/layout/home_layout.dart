@@ -1,10 +1,11 @@
 import 'package:floki/layout/app_bar.dart';
-import 'package:floki/modules/checkout_screens/checkout_screen/checkout_screen.dart';
-import 'package:floki/modules/checkout_screens/pay_by_visa/pay_by_visa.dart';
 import 'package:floki/modules/first_screen/first_screen.dart';
+import 'package:floki/modules/indoor/indoor_checkout_screen/indoor_checkout_screen.dart';
 import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_error_screen.dart';
 import 'package:floki/modules/outdoor/home_screen/error_not_created_yet_screen.dart';
 import 'package:floki/modules/outdoor/home_screen/home_screen.dart';
+import 'package:floki/modules/outdoor/outdoor_checkout_screen/outdoor_checkout_screen.dart';
+import 'package:floki/modules/pay_by_visa/pay_by_visa.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -20,14 +21,15 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Map screens = {
-      0 : FirstPage(),
+      0 : FirstScreen(),
       1 : HomeScreen(),
       2 : outdoorMenuScreens[menuScreenIndex],
       3 : indoorMenuScreens[menuScreenIndex],
       4 : NotCreatedYet(),
       5 : QrCodeErrorScreen(),
-      6 : CheckOut(),
-      7 : PayByVisaScreen(),
+      6 : OutdoorCheckOut(),
+      7 : IndoorCheckOut(),
+      8 : PayByVisaScreen(),
     };
 
     var scaffoldKey = GlobalKey<ScaffoldState>();

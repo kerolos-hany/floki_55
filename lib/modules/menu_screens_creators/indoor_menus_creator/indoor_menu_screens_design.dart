@@ -28,10 +28,16 @@ class IndoorMenuScreensCreator extends StatelessWidget {
         builder: (context, state) => Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            SingleChildScrollView(
-              child: Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("Assets/Images/bck.jpeg"),
+                    fit: BoxFit.fill,
+                  )),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20.0, horizontal: 10),
@@ -78,7 +84,7 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                 child: RaisedButton(
                   color: secondaryColor,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 6),),);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 7),),);
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: Center(

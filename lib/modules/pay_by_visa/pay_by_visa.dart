@@ -22,9 +22,9 @@ class PayByVisaScreen extends StatelessWidget {
         ),
       ),
       child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -48,7 +48,6 @@ class PayByVisaScreen extends StatelessWidget {
                   _buildSubmitBtn(),
                 ],
               ),
-              physics: BouncingScrollPhysics(),
             ),
           )),
     );

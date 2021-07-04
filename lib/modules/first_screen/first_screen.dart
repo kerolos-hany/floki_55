@@ -4,7 +4,8 @@ import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class FirstPage extends StatelessWidget {
+class FirstScreen extends StatelessWidget {
+
   var context;
 
   @override
@@ -72,5 +73,3 @@ class FirstPage extends StatelessWidget {
     );
   }
 }
-
-//We can use SingleChildScrollView widget to solve the scrolling problem if we faced it

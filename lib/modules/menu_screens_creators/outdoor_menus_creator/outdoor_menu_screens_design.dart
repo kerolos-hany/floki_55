@@ -31,10 +31,16 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
           builder: (context, state) => Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              SingleChildScrollView(
-                child: Container(
-                  color: Colors.purple[50],
-                  width: double.infinity,
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("Assets/Images/bck.jpeg"),
+                      fit: BoxFit.fill,
+                    )),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),

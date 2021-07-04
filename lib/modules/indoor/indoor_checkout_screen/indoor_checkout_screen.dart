@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class CheckOut extends StatelessWidget {
+class IndoorCheckOut extends StatelessWidget {
 
   BuildContext context;
   String takeAwayStatus = "Indoor";
@@ -33,35 +33,14 @@ class CheckOut extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(25.0),
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     buildOrderDetailsText(
                         selectedItems: selectedItems, context: context),
-                    SizedBox(height: 40.0),
-                    Text(
-                      'Take Away?',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildButton(context: context, name: "Yes", onPress: _takeAwayYesFunc),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        _buildButton(context: context, name: "No", onPress: _takeAwayNoFunc),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 25,
+                      height: 70,
                     ),
                     buildCountersRows(
                     context: context,
@@ -186,35 +165,13 @@ class CheckOut extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeLayout(screenIndex: 7),
+        builder: (context) => HomeLayout(screenIndex: 8),
       ),
     );
   }
 
   void _payByCashFunc() {
     print("Cash");
-  }
-
-  void _takeAwayNoFunc() {
-    AppCubit.get(context).takeAway = false;
-    takeAwayStatus = "No";
-    AppCubit.get(context).counterColor = secondaryColor;
-    AppCubit.get(context).color = Color(0xff170b66);
-    AppCubit.get(context).iconsColor = Color(0xff170b66);
-    AppCubit.get(context).iconsBackColor = Colors.white;
-    AppCubit.get(context).emit(TakeAwayState());
-  }
-
-  void _takeAwayYesFunc() {
-    AppCubit.get(context).takeAway = true;
-    takeAwayStatus = "Yes";
-    AppCubit.get(context).counterColor = Colors.grey;
-    AppCubit.get(context).color = Colors.grey;
-    AppCubit.get(context).iconsColor = Colors.black;
-    AppCubit.get(context).iconsBackColor = Colors.grey;
-    AppCubit.get(context).tablesNumber = 0;
-    AppCubit.get(context).chairsNumber = 0;
-    AppCubit.get(context).emit(TakeAwayState());
   }
 
   Widget buildCountersRows({

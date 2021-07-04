@@ -30,31 +30,39 @@ class HomeScreen extends StatelessWidget {
       child: BlocConsumer <AppCubit,AppCubitStates>(
         listener: (context, state) {},
         builder: (context, state) => Container(
-          color: Colors.white,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildSearchBar(controller: searchBarController),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Expanded(
-                  child: GridView.builder(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("Assets/Images/bck.jpeg"),
+                fit: BoxFit.fill,
+              )),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildSearchBar(controller: searchBarController),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 20,
                         crossAxisSpacing: 20,
                       ),
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return _buildRestaurantItem(restaurants[index], context);
                         AppCubit.get(context).emit(RestaurantItemsState());
                         },
-                      itemCount: restaurants.length),
-                )
-              ],
+                      itemCount: restaurants.length)
+                ],
+              ),
             ),
           ),
         ),

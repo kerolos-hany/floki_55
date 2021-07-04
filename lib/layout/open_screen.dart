@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OpenPage extends StatelessWidget {
+class OpenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
