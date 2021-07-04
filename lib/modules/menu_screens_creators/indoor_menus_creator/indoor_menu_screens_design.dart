@@ -1,3 +1,4 @@
+import 'package:floki/layout/home_layout.dart';
 import 'package:floki/models/menu_items_model.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/components/components.dart';
@@ -77,7 +78,7 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                 child: RaisedButton(
                   color: secondaryColor,
                   onPressed: () {
-                    print("Submitted");
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 6),),);
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: Center(
