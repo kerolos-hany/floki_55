@@ -546,3 +546,31 @@ Widget buildSelectedItemRow({@required context, @required SelectedItemsModel sel
   )
   ;
 }
+
+Widget buildButton({
+  context,
+  @required String name,
+  @required Function onPress,
+  double width = 120,
+  double height = 50,
+  double fontSize = 25,
+}) {
+  return Container(
+    width: width,
+    height: height,
+    // ignore: deprecated_member_use
+    child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        color: Theme.of(context).primaryColor,
+        child: Text(name,
+            style: TextStyle(
+                fontSize: fontSize,
+                color: secondaryColor,
+                fontWeight: FontWeight.w800)),
+        onPressed: () {
+          onPress(context);
+        }),
+  );
+}

@@ -10,8 +10,6 @@ class AppCubit extends Cubit<AppCubitStates> {
   AppCubit() : super(AppInitialState());
 
   String chosenBranch = branches[0];
-  var chairsNumber = 0;
-  var tablesNumber = 0;
 
   static AppCubit get(context) => BlocProvider.of(context);
 
@@ -84,28 +82,50 @@ class AppCubit extends Cubit<AppCubitStates> {
       emit(MenuAddItemState());
   }
 
+
+  bool takeAway = false;
+  int chairsNumber = 0;
+  int tablesNumber = 0;
+  Widget tableCounterRow;
+  Color counterColor = secondaryColor; //Colors.black38;
+  Color color = Color(0xff170b66); //Colors.black38;
+  Color iconsColor = Color(0xff170b66); //Colors.black38;
+  Color iconsBackColor = Colors.white; //Colors.black38;
+
   void tablesNumberIncrement()
   {
-    tablesNumber++;
-    emit(TablesNumberState());
+    if (!takeAway) {
+      tablesNumber++;
+      emit(TablesNumberState());
+    }
+    else{}
   }
   void tablesNumberDecrement()
   {
-    if (tablesNumber > 0) {
-      tablesNumber--;
-      emit(TablesNumberState());
+    if (!takeAway) {
+      if (tablesNumber > 0) {
+        tablesNumber--;
+        emit(TablesNumberState());
+      }
     }
+    else {}
   }
   void chairsNumberIncrement()
   {
-    chairsNumber++;
-    emit(ChairsNumberState());
+    if (!takeAway) {
+      chairsNumber++;
+      emit(ChairsNumberState());
+    }
+    else {}
   }
   void chairsNumberDecrement()
   {
-    if (chairsNumber > 0) {
-      chairsNumber--;
-      emit(ChairsNumberState());
+    if (!takeAway) {
+      if (chairsNumber > 0) {
+        chairsNumber--;
+        emit(ChairsNumberState());
+      }
     }
+    else {}
   }
 }
