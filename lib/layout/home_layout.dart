@@ -19,7 +19,7 @@ class HomeLayout extends StatelessWidget {
   int chairs;
   List<SelectedItemsModel> selectedItems;
 
-  HomeLayout ({@required this.screenIndex, this.restaurantName, this.selectedItems, this.tables, this.chairs});
+  HomeLayout ({@required this.screenIndex, this.restaurantName = "Mcdonalds", this.selectedItems, this.tables, this.chairs});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +31,8 @@ class HomeLayout extends StatelessWidget {
       3 : indoorMenuScreens[restaurantIndex[restaurantName]],
       4 : NotCreatedYet(),
       5 : QrCodeErrorScreen(),
-      6 : OutdoorCheckOut(tables: tables,chairs: chairs,selectedItems: selectedItems),
-      7 : IndoorCheckOut(tables: tables,chairs: chairs,selectedItems: selectedItems),
+      6 : OutdoorCheckOut(selectedItems: selectedItems),
+      7 : IndoorCheckOut(selectedItems: selectedItems),
       8 : PayByVisaScreen(selectedItems: selectedItems),
     };
 

@@ -65,7 +65,11 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) =>
-                                buildMenuItem(item: items[index],context: context,addItemTag: items[index].addTag,removeItemTag: items[index].removeTag),
+                                buildMenuItem(
+                                    item: items[index],
+                                    context: context,
+                                    addItemTag: items[index].addTag,
+                                    removeItemTag: items[index].removeTag),
                             separatorBuilder: (context, index) => SizedBox(
                                   height: 20.0,
                                 ),
@@ -95,7 +99,10 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                         {
                           if(items[i].itemCount > 0)
                             {
-                              selectedItems.add(SelectedItemsModel(name: items[i].name, count: items[i].itemCount, price: items[i].price));
+                              selectedItems.add(SelectedItemsModel(
+                                  name: items[i].name,
+                                  count: items[i].itemCount,
+                                  price: items[i].price));
                             }
                         }
                     }
@@ -106,11 +113,16 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                         {
                           if(items[i].itemCount > 0)
                           {
-                            selectedItems.add(SelectedItemsModel(name: items[i].name, count: items[i].itemCount, price: items[i].price));
+                            selectedItems.add(SelectedItemsModel(
+                                name: items[i].name,
+                                count: items[i].itemCount,
+                                price: items[i].price));
                           }
                         }
                       }
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 7,chairs: chairs,tables: tables,selectedItems: selectedItems,),),);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(
+                      screenIndex: 7,
+                      selectedItems: selectedItems,),),);
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: Center(

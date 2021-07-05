@@ -8,7 +8,13 @@ class MenuDropDownState extends AppCubitStates {}
 class MenuRemoveItemState extends AppCubitStates {}
 class MenuAddItemState extends AppCubitStates {}
 class RestaurantItemsState extends AppCubitStates {}
-class TablesNumberState extends AppCubitStates {}
-class ChairsNumberState extends AppCubitStates {}
+class TablesNumberState extends AppCubitStates {
+  int tablesNumber;
+  TablesNumberState(this.tablesNumber);
+}
+class ChairsNumberState extends AppCubitStates {
+  int chairsNumber;
+  ChairsNumberState(this.chairsNumber);
+}
 class TakeAwayState extends AppCubitStates {}
 class ChangeBranchState extends AppCubitStates {}

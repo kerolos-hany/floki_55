@@ -8,8 +8,8 @@ class McdonaldsOutdoorMenu extends StatelessWidget {
 
   var searchBarController = TextEditingController();
   List<SelectedItemsModel> selectedItems = [];
-  int tables = 0;
-  int chairs = 0;
+  int chairs = RestaurantsModel.restaurants[0].chairs;
+  int tables = RestaurantsModel.restaurants[0].tables;
 
   @override
   Widget build(BuildContext context) {

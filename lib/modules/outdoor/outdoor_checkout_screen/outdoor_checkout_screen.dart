@@ -1,4 +1,5 @@
 import 'package:floki/layout/home_layout.dart';
+import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
@@ -10,13 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: must_be_immutable
 class OutdoorCheckOut extends StatelessWidget {
   List<SelectedItemsModel> selectedItems;
-  int tables;
-  int chairs;
 
   OutdoorCheckOut(
-      {@required this.selectedItems,
-      @required this.tables,
-      @required this.chairs});
+      {@required this.selectedItems,});
 
   BuildContext context;
   String takeAwayStatus = "Indoor";
@@ -28,7 +25,10 @@ class OutdoorCheckOut extends StatelessWidget {
       child: BlocConsumer<AppCubit, AppCubitStates>(
         listener: (context, state) {},
         builder: (context, state) {
+
+          AppCubit.get(context).fillTablesChairsLists();
           this.context = context;
+
           return Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -163,9 +163,17 @@ class OutdoorCheckOut extends StatelessWidget {
     print("Visa");
 
     if (AppCubit.get(context).takeAway) {
+      print("takeaway");
       takeAwayStatus = "Takeaway";
     } else {
       takeAwayStatus = "Indoor";
+      AppCubit.get(context).tables[0] -= AppCubit.get(context).tablesNumber;
+      RestaurantsModel.restaurants[0].tables = AppCubit.get(context).tables[0];
+      AppCubit.get(context).emit(TablesNumberState(AppCubit.get(context).tablesNumber));
+
+      AppCubit.get(context).chairs[0] -= AppCubit.get(context).chairsNumber;
+      RestaurantsModel.restaurants[0].chairs = AppCubit.get(context).chairs[0];
+      AppCubit.get(context).emit(ChairsNumberState(AppCubit.get(context).chairsNumber));
     }
 
     Navigator.push(

@@ -68,7 +68,7 @@ class FirstScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeLayout(screenIndex: 1),
+        builder: (context) => HomeLayout(screenIndex: 1,restaurantName: "Mcdonalds",),
       ),
     );
   }

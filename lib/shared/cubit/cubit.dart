@@ -98,40 +98,47 @@ class AppCubit extends Cubit<AppCubitStates> {
   Color iconsColor = Color(0xff170b66); //Colors.black38;
   Color iconsBackColor = Colors.white; //Colors.black38;
 
-  void tablesNumberIncrement()
-  {
+  void tablesNumberIncrement() {
     if (!takeAway) {
       tablesNumber++;
-      emit(TablesNumberState());
+      emit(TablesNumberState(tables[0]));
     }
     else{}
   }
-  void tablesNumberDecrement()
-  {
+  void tablesNumberDecrement() {
     if (!takeAway) {
       if (tablesNumber > 0) {
         tablesNumber--;
-        emit(TablesNumberState());
+        emit(TablesNumberState(tables[0]));
       }
     }
     else {}
   }
-  void chairsNumberIncrement()
-  {
+  void chairsNumberIncrement() {
     if (!takeAway) {
       chairsNumber++;
-      emit(ChairsNumberState());
+      emit(ChairsNumberState(chairs[0]));
     }
     else {}
   }
-  void chairsNumberDecrement()
-  {
+  void chairsNumberDecrement() {
     if (!takeAway) {
       if (chairsNumber > 0) {
         chairsNumber--;
-        emit(ChairsNumberState());
+        emit(ChairsNumberState(chairs[0]));
       }
     }
     else {}
+  }
+
+  List <int> tables = [];
+  List <int> chairs = [];
+  void fillTablesChairsLists ()
+  {
+    for(int i = 0; i < RestaurantsModel.restaurants.length; i++)
+      {
+        tables.add(RestaurantsModel.restaurants[i].tables);
+        chairs.add(RestaurantsModel.restaurants[i].chairs);
+      }
   }
 }
