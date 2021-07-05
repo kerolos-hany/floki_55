@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: Color(0xff170b66),
       ),
-      home: HomeLayout(screenIndex: 0, menuScreenIndex: 0,),
+      home: HomeLayout(screenIndex: 0, restaurantName: "Mcdonalds",),
       //0 : FirstPage(), 1 : HomeScreen(), 2,0 : outdoorMenuScreens(0), 3,0 indoorMenuScreens(0)
       //4 : NotCreatedYet(), 5 : QrCodeErrorScreen(), 6 : CheckOut(), 7 : PayByVisaScreen()
 

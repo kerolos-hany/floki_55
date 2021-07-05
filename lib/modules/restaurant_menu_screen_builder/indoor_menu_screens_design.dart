@@ -1,5 +1,6 @@
 import 'package:floki/layout/home_layout.dart';
 import 'package:floki/models/menu_items_model.dart';
+import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
@@ -9,14 +10,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class IndoorMenuScreensCreator extends StatelessWidget {
+
   var searchBarController;
   List<MenuItemModel> items;
-  BuildContext context;
+  List<SelectedItemsModel> selectedItems;
+  int tables;
+  int chairs;
 
   IndoorMenuScreensCreator({
     @required this.items,
     @required this.searchBarController,
-    @required this.context,
+    @required this.tables,
+    @required this.chairs,
+    @required this.selectedItems,
   });
 
   @override
@@ -59,7 +65,7 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) =>
-                                buildMenuItem(items[index], context),
+                                buildMenuItem(item: items[index],context: context,addItemTag: items[index].addTag,removeItemTag: items[index].removeTag),
                             separatorBuilder: (context, index) => SizedBox(
                                   height: 20.0,
                                 ),
@@ -84,7 +90,27 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                 child: RaisedButton(
                   color: secondaryColor,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 7),),);
+                    if (selectedItems.isEmpty) {
+                      for(int i = 0; i < items.length; i++)
+                        {
+                          if(items[i].itemCount > 0)
+                            {
+                              selectedItems.add(SelectedItemsModel(name: items[i].name, count: items[i].itemCount, price: items[i].price));
+                            }
+                        }
+                    }
+                    else
+                      {
+                        selectedItems.clear();
+                        for(int i = 0; i < items.length; i++)
+                        {
+                          if(items[i].itemCount > 0)
+                          {
+                            selectedItems.add(SelectedItemsModel(name: items[i].name, count: items[i].itemCount, price: items[i].price));
+                          }
+                        }
+                      }
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 7,chairs: chairs,tables: tables,selectedItems: selectedItems,),),);
                   },
                   textColor: Theme.of(context).primaryColor,
                   child: Center(

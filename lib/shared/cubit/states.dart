@@ -11,3 +11,4 @@ class RestaurantItemsState extends AppCubitStates {}
 class TablesNumberState extends AppCubitStates {}
 class ChairsNumberState extends AppCubitStates {}
 class TakeAwayState extends AppCubitStates {}
+class ChangeBranchState extends AppCubitStates {}

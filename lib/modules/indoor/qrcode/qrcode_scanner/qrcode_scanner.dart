@@ -90,7 +90,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
       }
     else if(int.tryParse(restaurantIndexString) != null)
       {
-        int restaurantIndex = int.parse(restaurantIndexString);
+        int index = int.parse(restaurantIndexString);
 
         if (!scanned) {
           scanned = true;
@@ -98,8 +98,8 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
             context,
             MaterialPageRoute(
               builder: (context) => HomeLayout(
-                screenIndex: restaurantIndex < indoorMenuScreens.length? 3: 4,
-                menuScreenIndex: restaurantIndex < indoorMenuScreens.length? restaurantIndex : 0,
+                screenIndex: index < indoorMenuScreens.length? 3: 4,
+                restaurantName: index < indoorMenuScreens.length? restaurantIndex[index] : restaurantIndex[0],
               ),
             ),
           ).then((value) {

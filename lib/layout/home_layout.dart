@@ -1,4 +1,5 @@
 import 'package:floki/layout/app_bar.dart';
+import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/indoor/indoor_checkout_screen/indoor_checkout_screen.dart';
 import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_error_screen.dart';
@@ -12,10 +13,13 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class HomeLayout extends StatelessWidget {
 
-  final int screenIndex;
-  final int menuScreenIndex;
+  int screenIndex;
+  String restaurantName;
+  int tables;
+  int chairs;
+  List<SelectedItemsModel> selectedItems;
 
-  HomeLayout ({@required this.screenIndex, this.menuScreenIndex = 0});
+  HomeLayout ({@required this.screenIndex, this.restaurantName, this.selectedItems, this.tables, this.chairs});
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +27,13 @@ class HomeLayout extends StatelessWidget {
     Map screens = {
       0 : FirstScreen(),
       1 : HomeScreen(),
-      2 : outdoorMenuScreens[menuScreenIndex],
-      3 : indoorMenuScreens[menuScreenIndex],
+      2 : outdoorMenuScreens[restaurantIndex[restaurantName]],
+      3 : indoorMenuScreens[restaurantIndex[restaurantName]],
       4 : NotCreatedYet(),
       5 : QrCodeErrorScreen(),
-      6 : OutdoorCheckOut(),
-      7 : IndoorCheckOut(),
-      8 : PayByVisaScreen(),
+      6 : OutdoorCheckOut(tables: tables,chairs: chairs,selectedItems: selectedItems),
+      7 : IndoorCheckOut(tables: tables,chairs: chairs,selectedItems: selectedItems),
+      8 : PayByVisaScreen(selectedItems: selectedItems),
     };
 
     var scaffoldKey = GlobalKey<ScaffoldState>();

@@ -12,14 +12,6 @@ class HomeScreen extends StatelessWidget {
   double screenWidth;
   BuildContext context;
   var searchBarController = TextEditingController();
-  List<RestaurantsModel> restaurants = [
-    RestaurantsModel(imagePath: "Assets/Images/Buffalo Burger.png", id: 0),
-    RestaurantsModel(imagePath: "Assets/Images/Mcdonalds.png", id: 1),
-    RestaurantsModel(imagePath: "Assets/Images/Heart Attack.png", id: 2),
-    RestaurantsModel(imagePath: "Assets/Images/Buffalo Burger.png", id: 3),
-    RestaurantsModel(imagePath: "Assets/Images/Mcdonalds.png", id: 4),
-    RestaurantsModel(imagePath: "Assets/Images/Heart Attack.png", id: 5),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +43,16 @@ class HomeScreen extends StatelessWidget {
                   GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
                       ),
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        return _buildRestaurantItem(restaurants[index], context);
+                        return _buildRestaurantItem(RestaurantsModel.restaurants[index], context);
                         AppCubit.get(context).emit(RestaurantItemsState());
                         },
-                      itemCount: restaurants.length)
+                      itemCount: RestaurantsModel.restaurants.length)
                 ],
               ),
             ),
@@ -71,39 +63,43 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildRestaurantItem(RestaurantsModel restaurant, context) {
+
     screenWidth = MediaQuery.of(context).size.width;
 
-    return GestureDetector(
-      onTap: () {
-        print(restaurant.id);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeLayout(
-              screenIndex: restaurant.id < indoorMenuScreens.length? 2: 4,
-              menuScreenIndex: restaurant.id < indoorMenuScreens.length? restaurant.id: 0,
+    return Padding(
+      padding: const EdgeInsets.all(3),
+      child: GestureDetector(
+        onTap: () {
+          print(restaurant.id);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeLayout(
+                screenIndex: restaurant.id < indoorMenuScreens.length? 2: 4,
+                restaurantName: restaurant.id < indoorMenuScreens.length? restaurant.name: "Mcdonalds",
+              ),
             ),
+          );
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: 170,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: Offset(1.5, 2),
+              ),
+            ],
+            image: DecorationImage(
+                image: restaurant.imagePath.substring(0, 6) == "Assets"
+                    ? AssetImage(restaurant.imagePath)
+                    : NetworkImage(restaurant.imagePath),
+                fit: BoxFit.cover),
           ),
-        );
-      },
-      child: Container(
-        width: (screenWidth - 60) / 2,
-        height: 170,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              spreadRadius: 1,
-              blurRadius: 1,
-              offset: Offset(1.5, 2),
-            ),
-          ],
-          image: DecorationImage(
-              image: restaurant.imagePath.substring(0, 6) == "Assets"
-                  ? AssetImage(restaurant.imagePath)
-                  : NetworkImage(restaurant.imagePath),
-              fit: BoxFit.cover),
         ),
       ),
     );

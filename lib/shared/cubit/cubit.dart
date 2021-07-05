@@ -1,17 +1,24 @@
 import 'package:bloc/bloc.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
+import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'states.dart';
 
 class AppCubit extends Cubit<AppCubitStates> {
+
   AppCubit() : super(AppInitialState());
-
-  String chosenBranch = branches[0];
-
   static AppCubit get(context) => BlocProvider.of(context);
+
+  String chosenBranch = RestaurantsModel.restaurants[0].branches[0];
+  bool tapped0 = false;
+  bool tapped1 = false;
+  bool tapped2 = false;
+  Color filterColor0;
+  Color filterColor1;
+  Color filterColor2;
 
   void filterOnTap(context, FilterModel filter) {
     if (filter.id == 0) {
@@ -81,7 +88,6 @@ class AppCubit extends Cubit<AppCubitStates> {
       print(item.itemCount);
       emit(MenuAddItemState());
   }
-
 
   bool takeAway = false;
   int chairsNumber = 0;

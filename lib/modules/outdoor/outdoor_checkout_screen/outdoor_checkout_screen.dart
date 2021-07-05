@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class IndoorCheckOut extends StatelessWidget {
+class OutdoorCheckOut extends StatelessWidget {
   List<SelectedItemsModel> selectedItems;
   int tables;
   int chairs;
 
-  IndoorCheckOut(
+  OutdoorCheckOut(
       {@required this.selectedItems,
       @required this.tables,
       @required this.chairs});
@@ -47,7 +47,33 @@ class IndoorCheckOut extends StatelessWidget {
                     children: [
                       buildOrderDetails(
                           selectedItems: selectedItems, context: context),
-                      SizedBox(height: 70,),
+                      SizedBox(height: 40.0),
+                      Text(
+                        'Take Away?',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildButton(
+                              context: context,
+                              name: "Yes",
+                              onPress: _takeAwayYesFunc),
+                          SizedBox(width: 50,),
+                          _buildButton(
+                              context: context,
+                              name: "No",
+                              onPress: _takeAwayNoFunc),
+                        ],
+                      ),
+                      SizedBox(height: 30,),
                       buildCountersRows(
                           context: context,
                           addTag: "addTables",
@@ -81,32 +107,15 @@ class IndoorCheckOut extends StatelessWidget {
                             AppCubit.get(context).chairsNumberIncrement();
                           },
                           count: AppCubit.get(context).chairsNumber),
-                      SizedBox(height: 30,),
-                      Text(
-                        'Pay By?',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 25,),
+                      SizedBox(height: 70,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _buildButton(
                               context: context,
-                              name: "Cash",
-                              onPress: _payByCashFunc,
-                              width: 130,
-                              height: 70,
-                              fontSize: 30),
-                          SizedBox(width: 50,),
-                          _buildButton(
-                              context: context,
-                              name: "Visa",
+                              name: "Go to Payment",
                               onPress: _payByVisaFunc,
-                              width: 130,
+                              width: 250,
                               height: 70,
                               fontSize: 30),
                         ],
@@ -170,8 +179,26 @@ class IndoorCheckOut extends StatelessWidget {
     );
   }
 
-  void _payByCashFunc() {
-    print("Cash");
+  void _takeAwayNoFunc() {
+    AppCubit.get(context).takeAway = false;
+    takeAwayStatus = "Indoor";
+    AppCubit.get(context).counterColor = secondaryColor;
+    AppCubit.get(context).color = Color(0xff170b66);
+    AppCubit.get(context).iconsColor = Color(0xff170b66);
+    AppCubit.get(context).iconsBackColor = Colors.white;
+    AppCubit.get(context).emit(TakeAwayState());
+  }
+
+  void _takeAwayYesFunc() {
+    AppCubit.get(context).takeAway = true;
+    takeAwayStatus = "Takeaway";
+    AppCubit.get(context).counterColor = Colors.grey;
+    AppCubit.get(context).color = Colors.grey;
+    AppCubit.get(context).iconsColor = Colors.black;
+    AppCubit.get(context).iconsBackColor = Colors.grey;
+    AppCubit.get(context).tablesNumber = 0;
+    AppCubit.get(context).chairsNumber = 0;
+    AppCubit.get(context).emit(TakeAwayState());
   }
 
   Widget buildCountersRows({
