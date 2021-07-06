@@ -99,7 +99,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
             MaterialPageRoute(
               builder: (context) => HomeLayout(
                 screenIndex: index < indoorMenuScreens.length? 3: 4,
-                restaurantName: index < indoorMenuScreens.length? restaurantIndex[index] : restaurantIndex[0],
+                restaurantName: "Mcdonalds",
               ),
             ),
           ).then((value) {
