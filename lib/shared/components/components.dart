@@ -7,22 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants.dart';
 
-Widget buildEmailRow({Function onChange}) {
-  var emailController = TextEditingController();
+Widget buildTextFormField(
+    {emailController, IconData icon, String labelText, TextInputType textInputType, Icon suffixIcon, bool obscure, validator}) {
   return Padding(
     padding: EdgeInsets.all(3),
     child: TextFormField(
       controller: emailController,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: textInputType,
+      obscureText: obscure,
+      validator: validator,
       onChanged: (value) {
         emailController.text = value;
       },
       decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           prefixIcon: Icon(
-            Icons.email,
+            icon,
             color: Color(0xff23195f),
           ),
-          labelText: 'E-mail or Username',
+          labelText: labelText,
           labelStyle: TextStyle(color: Colors.grey[400])),
     ),
   );
@@ -72,183 +75,188 @@ Widget buildSearchBar({@required controller}) {
 }
 
 Widget buildFiltersRow(context, List<FilterModel> filters) {
-  return BlocConsumer<AppCubit,AppCubitStates>(
-    listener: (context,state) {},
-    builder: (context,state) => Row(
-      children: [
-        GestureDetector(
-          onTap: () {
-            AppCubit.get(context).filterOnTap(context, filters[0]);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              width: 140.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
-                color: AppCubit.get(context).filterColor0,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    offset: Offset(2, 1),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                  )
-                ],
-              ),
+  return BlocConsumer<AppCubit, AppCubitStates>(
+    listener: (context, state) {},
+    builder: (context, state) =>
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                AppCubit.get(context).filterOnTap(context, filters[0]);
+              },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(filters[0].image),
-                          fit: BoxFit.fill,
+                padding: const EdgeInsets.all(5.0),
+                child: Container(
+                  width: 140.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35.0),
+                    color: AppCubit
+                        .get(context)
+                        .filterColor0,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        offset: Offset(2, 1),
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(filters[0].image),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          filters[0].name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: secondaryColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      filters[0].name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            AppCubit.get(context).filterOnTap1(context, filters[1]);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              width: 140.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
-                color: AppCubit.get(context).filterColor1,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    offset: Offset(2, 1),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                  )
-                ],
-              ),
+            GestureDetector(
+              onTap: () {
+                AppCubit.get(context).filterOnTap1(context, filters[1]);
+              },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(filters[1].image),
-                          fit: BoxFit.fill,
+                padding: const EdgeInsets.all(5.0),
+                child: Container(
+                  width: 140.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35.0),
+                    color: AppCubit
+                        .get(context)
+                        .filterColor1,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        offset: Offset(2, 1),
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(filters[1].image),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          filters[1].name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: secondaryColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      filters[1].name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            AppCubit.get(context).filterOnTap2(context, filters[2]);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              width: 140.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
-                color: AppCubit.get(context).filterColor2,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    offset: Offset(2, 1),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                  )
-                ],
-              ),
+            GestureDetector(
+              onTap: () {
+                AppCubit.get(context).filterOnTap2(context, filters[2]);
+              },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(filters[2].image),
-                          fit: BoxFit.fill,
+                padding: const EdgeInsets.all(5.0),
+                child: Container(
+                  width: 140.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35.0),
+                    color: AppCubit
+                        .get(context)
+                        .filterColor2,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                        offset: Offset(2, 1),
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(filters[2].image),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          filters[2].name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: secondaryColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      filters[2].name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
   );
 }
 
-Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String removeItemTag}) {
+Widget buildMenuItem(
+    {MenuItemModel item, context, String addItemTag, String removeItemTag}) {
   return Container(
-    width: (MediaQuery
-        .of(context)
-        .size
-        .width) - 50,
+    width: double.infinity,
     height: 120.0,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30.0),
@@ -289,49 +297,44 @@ Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String rem
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 20,
+            Expanded(
+              child: Container(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * .6,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Text(
+                        item.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  item.name,
-                  style: TextStyle(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
             Expanded(
               child: Container(
-                width: 210,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * .5,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // Icon(
-                    //   Icons.star,
-                    //   size: 30.0,
-                    //   color: secondaryColor,
-                    // ),
-                    // Text(
-                    //   "${item.rate}",
-                    //   maxLines: 1,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   style: TextStyle(
-                    //     color: Theme
-                    //         .of(context)
-                    //         .primaryColor,
-                    //     fontSize: 15,
-                    //     fontWeight: FontWeight.w700,
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   width: 20,
-                    // ),
                     SizedBox(
                       width: 20,
                     ),
@@ -354,7 +357,6 @@ Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String rem
               ),
             ),
             Container(
-              width: 210,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -376,7 +378,7 @@ Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String rem
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 12,
                   ),
                   Text(
                     "${item.itemCount}",
@@ -386,7 +388,7 @@ Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String rem
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 12,
                   ),
                   FloatingActionButton(
                     onPressed: () {
@@ -453,18 +455,18 @@ Widget buildErrorScreen(String text, context) {
   );
 }
 
-Widget buildOrderDetails({@required context, @required List<SelectedItemsModel> selectedItems}) {
-
+Widget buildOrderDetails(
+    {@required context, @required List<SelectedItemsModel> selectedItems}) {
   double total;
   if (selectedItems.length > 0) {
     total = selectedItems[0].price;
   }
-  else{
+  else {
     total = 0;
   }
   for (int i = 1; i < selectedItems.length; i++) {
     total += (selectedItems[i].price * selectedItems[i].count);
-    }
+  }
 
 
   return Container(
@@ -485,11 +487,12 @@ Widget buildOrderDetails({@required context, @required List<SelectedItemsModel> 
         Container(
           width: double.infinity,
           child: ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemBuilder: (context, index) => buildSelectedItemRow(
-                  context: context,
-                  selectedItem: selectedItems[index]),
+              itemBuilder: (context, index) =>
+                  buildSelectedItemRow(
+                      context: context,
+                      selectedItem: selectedItems[index]),
               separatorBuilder: (context, index) => SizedBox(height: 20,),
               itemCount: selectedItems.length),
         ),
@@ -535,7 +538,8 @@ Widget buildOrderDetails({@required context, @required List<SelectedItemsModel> 
   );
 }
 
-Widget buildSelectedItemRow({@required context, @required SelectedItemsModel selectedItem}) {
+Widget buildSelectedItemRow(
+    {@required context, @required SelectedItemsModel selectedItem}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[

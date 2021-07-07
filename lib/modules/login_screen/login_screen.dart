@@ -1,36 +1,42 @@
+import 'package:floki/modules/first_screen/first_screen.dart';
+import 'package:floki/modules/signup_screen/signup_screen.dart';
+import 'package:floki/shared/cubit/cubit.dart';
+import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// print ("hello");
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginFormState createState() => _LoginFormState();
-}
+// ignore: must_be_immutable
+class LoginScreen extends StatelessWidget {
 
-class _LoginFormState extends State<LoginScreen> {
-
-  bool _isHidden = true;
+  static String route = "/LoginScreen";
+  bool isHidden = true;
   String email, password;
-  void _toggleVisibility() {
-    setState(() {
-      _isHidden = !_isHidden;
-    });
-  }
+  BuildContext context;
+  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context)
   {
-    return Scaffold(
-      //backgroundColor: Colors.white,
-      body: Container(
-        // width: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('Assets/Images/signup.jpeg'), fit: BoxFit.fill)),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 165.0),
+    this.context = context;
+    return BlocConsumer <AppCubit,AppCubitStates> (
+      listener: (context,state) {},
+      builder: (context,state) {
+        return Scaffold(
+        body: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('Assets/Images/bck.jpeg'), fit: BoxFit.fill)),
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height * 0.7,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+              ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -42,10 +48,8 @@ class _LoginFormState extends State<LoginScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40),
                               side: BorderSide(color: Colors.white)),
-                          color: Color(0xff170b66),
-                          onPressed: () {
-                            print("please login");
-                          },
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {},
                           child: Text("Log In",
                               style: TextStyle(
                                 color: Colors.white,
@@ -60,7 +64,7 @@ class _LoginFormState extends State<LoginScreen> {
                             side: BorderSide(color: Colors.white)),
                         color: Colors.white,
                         onPressed: () {
-                          print("please sign up");
+                          Navigator.popAndPushNamed(context, SignupScreen.route);
                         },
                         child: Text("Sign Up",
                             style: TextStyle(
@@ -79,25 +83,32 @@ class _LoginFormState extends State<LoginScreen> {
                     height: 7.0,
                   ),
                   _buildForgotPasswordBtn(),
+                  SizedBox(
+                    height: 17,
+                  ),
+                  _buildLoginBtn(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildSignInWithText(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildSocialBtnRow(),
                 ],
               ),
             ),
-            SizedBox(
-              height: 17,
-            ),
-            _buildLoginBtn(),
-            SizedBox(
-              height: 15,
-            ),
-            _buildSignInWithText(),
-            SizedBox(
-              height: 10,
-            ),
-            _buildSocialBtnRow(),
-          ],
+          ),
         ),
-      ),
+      );
+      },
     );
+  }
+
+  void toggleVisibility() {
+    // setState(() {
+    //   isHidden = !isHidden;
+    // });
   }
 
   Widget _buildEmailRow() {
@@ -106,9 +117,9 @@ class _LoginFormState extends State<LoginScreen> {
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         onChanged: (value) {
-          setState(() {
-            email = value;
-          });
+          // setState(() {
+          //   email = value;
+          // });
         },
         decoration: InputDecoration(
             prefixIcon: Icon(
@@ -125,24 +136,25 @@ class _LoginFormState extends State<LoginScreen> {
     return Padding(
       padding: EdgeInsets.all(2),
       child: TextFormField(
+        controller: passwordController,
         keyboardType: TextInputType.text,
         obscureText: true,
         onChanged: (value) {
-          setState(() {
-            password = value;
-          });
+          // setState(() {
+          //   password = value;
+          // });
         },
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.lock,
               color: Color(0xff23195f),
             ),
-            suffixIcon: IconButton(
-              onPressed: _toggleVisibility,
-              icon: _isHidden
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
-            ),
+            // suffixIcon: IconButton(
+            //   onPressed: toggleVisibility,
+            //   icon: isHidden
+            //       ? Icon(Icons.visibility_off)
+            //       : Icon(Icons.visibility),
+            // ),
             labelText: 'Password',
             labelStyle: TextStyle(color: Colors.grey[400])),
       ),
@@ -153,12 +165,11 @@ class _LoginFormState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       // ignore: deprecated_member_use
-      child: FlatButton(
+      child: TextButton(
         onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
         child: Text(
           'Forgot Password?',
-          style: TextStyle(color: Color(0xff23195f)),
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
       ),
     );
@@ -196,8 +207,8 @@ class _LoginFormState extends State<LoginScreen> {
             side: BorderSide(color: Colors.white)),
         color: Color(0xff170b66),
         onPressed: () {
-          print("NO terpilih");
-        },
+          Navigator.pushNamed(context, FirstScreen.route);
+          },
         child: Text("Log In",
             style: TextStyle(
               color: Colors.white,

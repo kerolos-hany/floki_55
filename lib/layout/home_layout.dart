@@ -19,7 +19,7 @@ class HomeLayout extends StatelessWidget {
   int chairs;
   List<SelectedItemsModel> selectedItems;
 
-  HomeLayout ({@required this.screenIndex, this.restaurantName = "Mcdonalds", this.selectedItems, this.tables, this.chairs});
+  HomeLayout ({@required this.screenIndex, this.restaurantName = "McdonaldsSheraton", this.selectedItems, this.tables, this.chairs});
 
   @override
   Widget build(BuildContext context) {

@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
+
+  static String route = "/LoginScreen/HomeScreen/";
   double screenWidth;
   BuildContext context;
   var searchBarController = TextEditingController();
@@ -75,8 +77,8 @@ class HomeScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => HomeLayout(
-                screenIndex: restaurant.id < indoorMenuScreens.length? 2: 4,
-                restaurantName: restaurant.id < indoorMenuScreens.length? restaurant.name: "Mcdonalds",
+                screenIndex: restaurant.id < outdoorMenuScreens.length? 2: 4,
+                restaurantName: restaurant.id < outdoorMenuScreens.length? "${restaurant.name}${restaurant.branchName}": "McdonaldsSheraton",
               ),
             ),
           );

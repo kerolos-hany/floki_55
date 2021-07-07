@@ -12,7 +12,7 @@ class AppCubit extends Cubit<AppCubitStates> {
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  String chosenBranch = RestaurantsModel.restaurants[0].branches[0];
+  String chosenBranch;
   bool tapped0 = false;
   bool tapped1 = false;
   bool tapped2 = false;

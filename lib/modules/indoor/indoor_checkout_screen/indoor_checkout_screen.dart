@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class IndoorCheckOut extends StatelessWidget {
+
+  static String route = "/LoginScreen/HomeScreen/McdonaldsIndoorMenu/McdonaldsIndoorCheckOut/";
   List<SelectedItemsModel> selectedItems;
   int tables;
   int chairs;

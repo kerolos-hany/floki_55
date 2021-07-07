@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class FirstScreen extends StatelessWidget {
 
+  static String route = "/LoginScreen/";
   var context;
 
   @override
@@ -56,11 +57,12 @@ class FirstScreen extends StatelessWidget {
   }
 
   void _inDoorButtonFunc() {
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => QrCodeScanner(),
       ),
+      ModalRoute.withName(FirstScreen.route),
     );
   }
 
@@ -68,7 +70,7 @@ class FirstScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeLayout(screenIndex: 1,restaurantName: "Mcdonalds",),
+        builder: (context) => HomeLayout(screenIndex: 1,),
       ),
     );
   }

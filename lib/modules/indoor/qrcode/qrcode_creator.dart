@@ -8,6 +8,8 @@ import 'qrcode_cubit/qrcode_states.dart';
 
 // ignore: must_be_immutable
 class QrCodeCreator extends StatelessWidget {
+
+  static String route = "QrCodeCreator/";
   var controller = TextEditingController();
 
   @override

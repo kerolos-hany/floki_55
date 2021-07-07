@@ -1,21 +1,31 @@
 import 'dart:io';
-import 'package:floki/layout/home_layout.dart';
+import 'package:floki/models/restaurants_model.dart';
+import 'package:floki/modules/indoor/qrcode/qrcode_scanner/qrcode_error_screen.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrCodeScanner extends StatefulWidget {
+  static String route = "/LoginScreen/QrCodeScanner/";
+
   @override
   _QrCodeScannerState createState() => _QrCodeScannerState();
 }
 
 class _QrCodeScannerState extends State<QrCodeScanner> {
   var qrKey = GlobalKey(debugLabel: 'QR');
-  String restaurantIndexString;
 
   Barcode barcode;
   BuildContext context;
   QRViewController qrController;
+  String branchIndexString;
+  int branchIndex;
+  String restaurantName;
+  int chosenRestaurantIndex;
+  RestaurantsModel chosenRestaurant;
+  String chosenBranch;
+  String resultBarCode;
+  String orderTableNumber;
 
   @override
   void dispose() {
@@ -38,12 +48,12 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     this.context = context;
     return buildQrScanner(context);
   }
+
   bool scanned = false;
 
   Widget buildQrScanner(context) {
     return QRView(
       key: qrKey,
-
       onQRViewCreated: (controller) {
         setState(() {
           qrController = controller;
@@ -53,6 +63,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
           resultBarCode = barcode.code;
           print(resultBarCode);
           _qrCodeTableNumber(resultBarCode);
+          _qrCodeBranchName(resultBarCode);
           _qrCodeRestaurantName(resultBarCode);
         });
       },
@@ -68,44 +79,46 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
   void _qrCodeTableNumber(String resultBarCode) {
     orderTableNumber = resultBarCode.substring(0, 2);
+  }
+  void _qrCodeBranchName(String resultBarCode)
+  {
+    branchIndexString = resultBarCode.substring(2, 4);
+    try {
+      branchIndex = int.parse(branchIndexString);
+    } on Exception catch (e) {
+      scanned = true;
+      print("Error $e found");
+      Navigator.pushNamed(context, QrCodeErrorScreen.route).then((value) {
+        scanned = false;
+      });
     }
+  }
 
   void _qrCodeRestaurantName(String resultBarCode) {
     int stringLength = resultBarCode.length;
-    restaurantIndexString = resultBarCode.substring(2, stringLength);
+    restaurantName = resultBarCode.substring(4, stringLength);
 
-    if(int.tryParse(restaurantIndexString) == null)
-      {
-        if (!scanned) {
-          scanned = true;
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeLayout(screenIndex: 5),
-              ),
-          ).then((value) {
-            scanned = false;
-          });
-        }
-      }
-    else if(int.tryParse(restaurantIndexString) != null)
-      {
-        int index = int.parse(restaurantIndexString);
+    try {
+      chosenRestaurantIndex = RestaurantsModel.restaurants
+          .indexWhere((element) => element.name == restaurantName);
+    } on Exception catch (e) {
+      scanned = true;
+      print("Error $e caught!");
+      Navigator.pushNamed(context, QrCodeErrorScreen.route).then((value) {
+        scanned = false;
+      });
+    }
 
-        if (!scanned) {
-          scanned = true;
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomeLayout(
-                screenIndex: index < indoorMenuScreens.length? 3: 4,
-                restaurantName: "Mcdonalds",
-              ),
-            ),
-          ).then((value) {
-            scanned = false;
-          });
-        }
-      }
+    chosenRestaurant = RestaurantsModel.restaurants[chosenRestaurantIndex];
+    chosenBranch = chosenRestaurant.branches[branchIndex];
+
+    if (!scanned) {
+      scanned = true;
+      Navigator.pushNamed(context,
+              "/LoginScreen/HomeScreen/${chosenRestaurant.name}${chosenBranch}IndoorMenu/",arguments: orderTableNumber)
+          .then((value) {
+        scanned = false;
+      });
+    }
   }
 }

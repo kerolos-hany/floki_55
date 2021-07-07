@@ -1,11 +1,15 @@
+import 'package:floki/modules/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
+
+  static String route = "/SignupScreen";
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<SignupScreen> {
+
   bool _isHidden = true;
   String email, password, phoneNumber;
 
@@ -41,8 +45,8 @@ class _LoginFormState extends State<SignupScreen> {
                             side: BorderSide(color: Colors.white)),
                         color: Colors.white,
                         onPressed: () {
-                          print("please sign up");
-                        },
+                          Navigator.popAndPushNamed(context, LoginScreen.route);
+                          },
                         child: Text("Log In",
                             style: TextStyle(
                               color: Color(0xff170b66),

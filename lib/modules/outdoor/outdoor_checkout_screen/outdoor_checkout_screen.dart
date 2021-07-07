@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class OutdoorCheckOut extends StatelessWidget {
+
+  static String route = "/LoginScreen/HomeScreen/McdonaldsOutdoorMenu/McdonaldsOutdoorCheckOut/";
   List<SelectedItemsModel> selectedItems;
 
   OutdoorCheckOut(

@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: must_be_immutable
 class PayByVisaScreen extends StatelessWidget {
 
+  static String route = "/LoginScreen/HomeScreen/McdonaldsOutdoorMenu/McdonaldsOutdoorCheckOut/PayByVisa";
   List<SelectedItemsModel> selectedItems;
   PayByVisaScreen({@required this.selectedItems});
 
