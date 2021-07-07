@@ -1,5 +1,6 @@
 import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/signup_screen/signup_screen.dart';
+import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
@@ -7,157 +8,138 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
-
   static String route = "/LoginScreen";
   bool isHidden = true;
   String email, password;
   BuildContext context;
-  var passwordController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     this.context = context;
-    return BlocConsumer <AppCubit,AppCubitStates> (
-      listener: (context,state) {},
-      builder: (context,state) {
+    return BlocConsumer<AppCubit, AppCubitStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
         return Scaffold(
-        body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('Assets/Images/bck.jpeg'), fit: BoxFit.fill)),
-          child: Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.85,
-              height: MediaQuery.of(context).size.height * 0.7,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // ignore: deprecated_member_use
-                      RaisedButton(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 4, horizontal: 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40),
-                              side: BorderSide(color: Colors.white)),
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () {},
-                          child: Text("Log In",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 19,
-                              ))),
-                      // ignore: deprecated_member_use
-                      RaisedButton(
-                        padding:
-                        EdgeInsets.symmetric(vertical: 4, horizontal: 40),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                            side: BorderSide(color: Colors.white)),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.popAndPushNamed(context, SignupScreen.route);
-                        },
-                        child: Text("Sign Up",
-                            style: TextStyle(
-                              color: Color(0xff170b66),
-                              fontSize: 18,
-                            )),
-                      ),
-                    ],
+          body: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('Assets/Images/bck.jpeg'),
+                    fit: BoxFit.fill)),
+            child: Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.85,
+                height: 580,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 40),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                    side: BorderSide(color: Colors.white)),
+                                color: Theme.of(context).primaryColor,
+                                onPressed: () {},
+                                child: Text("Log In",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 19,
+                                    ))),
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              padding:
+                                  EdgeInsets.symmetric(vertical: 4, horizontal: 40),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                  side: BorderSide(color: Colors.white)),
+                              color: Colors.white,
+                              onPressed: () {
+                                Navigator.popAndPushNamed(
+                                    context, SignupScreen.route);
+                              },
+                              child: Text("Sign Up",
+                                  style: TextStyle(
+                                    color: Color(0xff170b66),
+                                    fontSize: 18,
+                                  )),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        buildTextFormField(
+                          context: context,
+                            controller: emailController,
+                            labelText: "Email Address",
+                            textInputType: TextInputType.emailAddress,
+                            icon: Icons.email,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Email must not be empty";
+                              }
+                              return null;
+                            }),
+                        buildTextFormField(
+                            context: context,
+                            controller: passwordController,
+                            labelText: "Password",
+                            textInputType: TextInputType.visiblePassword,
+                            icon: Icons.lock,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Password must not be empty";
+                              }
+                              return null;
+                            },
+                          suffixIcon: isHidden?Icons.visibility_off:Icons.visibility,
+                          onPress: (){
+                            isHidden = !isHidden;
+                            AppCubit.get(context).emit(PasswordState());
+                          },
+                          obscure: isHidden,
+                        ),
+                        SizedBox(
+                          height: 7.0,
+                        ),
+                        _buildForgotPasswordBtn(),
+                        SizedBox(
+                          height: 17,
+                        ),
+                        _buildLoginBtn(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        _buildSignInWithText(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        _buildSocialBtnRow(),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _buildEmailRow(),
-                  _buildPasswordRow(),
-                  SizedBox(
-                    height: 7.0,
-                  ),
-                  _buildForgotPasswordBtn(),
-                  SizedBox(
-                    height: 17,
-                  ),
-                  _buildLoginBtn(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _buildSignInWithText(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildSocialBtnRow(),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
       },
-    );
-  }
-
-  void toggleVisibility() {
-    // setState(() {
-    //   isHidden = !isHidden;
-    // });
-  }
-
-  Widget _buildEmailRow() {
-    return Padding(
-      padding: EdgeInsets.all(3),
-      child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        onChanged: (value) {
-          // setState(() {
-          //   email = value;
-          // });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.email,
-              color: Color(0xff23195f),
-            ),
-            labelText: 'E-mail or Username',
-            labelStyle: TextStyle(color: Colors.grey[400])),
-      ),
-    );
-  }
-
-  Widget _buildPasswordRow() {
-    return Padding(
-      padding: EdgeInsets.all(2),
-      child: TextFormField(
-        controller: passwordController,
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        onChanged: (value) {
-          // setState(() {
-          //   password = value;
-          // });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Color(0xff23195f),
-            ),
-            // suffixIcon: IconButton(
-            //   onPressed: toggleVisibility,
-            //   icon: isHidden
-            //       ? Icon(Icons.visibility_off)
-            //       : Icon(Icons.visibility),
-            // ),
-            labelText: 'Password',
-            labelStyle: TextStyle(color: Colors.grey[400])),
-      ),
     );
   }
 
@@ -181,16 +163,16 @@ class LoginScreen extends StatelessWidget {
         Text(
           '- OR -',
           style: TextStyle(
-            color: Color(0xff23195f),
-            fontWeight: FontWeight.w400,
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: 20.0),
+        SizedBox(height: 10.0),
         Text(
           'Sign in with',
           style: TextStyle(
-            color: Color(0xff23195f),
-            fontWeight: FontWeight.w400,
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -205,10 +187,12 @@ class LoginScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: BorderSide(color: Colors.white)),
-        color: Color(0xff170b66),
+        color: Theme.of(context).primaryColor,
         onPressed: () {
-          Navigator.pushNamed(context, FirstScreen.route);
-          },
+          if (formKey.currentState.validate()) {
+            Navigator.pushNamed(context, FirstScreen.route);
+          }
+        },
         child: Text("Log In",
             style: TextStyle(
               color: Colors.white,
@@ -222,8 +206,8 @@ class LoginScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 40.0,
-        width: 40.0,
+        height: 42.5,
+        width: 42.5,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
@@ -249,25 +233,25 @@ class LoginScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _buildSocialBtn(
-                () => print('Login with Facebook'),
+            () => print('Login with Facebook'),
             AssetImage(
               'Assets/Images/face.png',
             ),
           ),
           SizedBox(
-            width: 12,
+            width: 20,
           ),
           _buildSocialBtn(
-                () => print('Login with Google'),
+            () => print('Login with Google'),
             AssetImage(
               'Assets/Images/google.png',
             ),
           ),
           SizedBox(
-            width: 12,
+            width: 20,
           ),
           _buildSocialBtn(
-                () => print('Login with Twitter'),
+            () => print('Login with Twitter'),
             AssetImage(
               'Assets/Images/twitter.png',
             ),

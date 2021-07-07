@@ -7,26 +7,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants.dart';
 
-Widget buildTextFormField(
-    {emailController, IconData icon, String labelText, TextInputType textInputType, Icon suffixIcon, bool obscure, validator}) {
-  return Padding(
-    padding: EdgeInsets.all(3),
-    child: TextFormField(
-      controller: emailController,
-      keyboardType: textInputType,
-      obscureText: obscure,
-      validator: validator,
-      onChanged: (value) {
-        emailController.text = value;
-      },
-      decoration: InputDecoration(
-          suffixIcon: suffixIcon,
-          prefixIcon: Icon(
-            icon,
-            color: Color(0xff23195f),
-          ),
-          labelText: labelText,
-          labelStyle: TextStyle(color: Colors.grey[400])),
+Widget buildTextFormField({
+  @required controller,
+  @required IconData icon,
+  @required String labelText,
+  @required TextInputType textInputType,
+  IconData suffixIcon,
+  bool obscure = false,
+  validator,
+  onChange,
+  onPress,
+  @required context,
+}) {
+  return TextFormField(
+    controller: controller,
+    keyboardType: textInputType,
+    obscureText: obscure,
+    validator: validator,
+    onChanged: onChange,
+    cursorColor: Theme.of(context).primaryColor,
+    decoration: InputDecoration(
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Theme.of(context).primaryColor),
+      ),
+      suffixIcon: suffixIcon != null? IconButton(
+        color: Theme.of(context).primaryColor,
+        icon: Icon(suffixIcon),
+        onPressed: onPress,
+      ): null,
+      prefixIcon: Icon(
+        icon,
+        color: Theme.of(context).primaryColor,
+      ),
+      labelText: labelText,
+      labelStyle: TextStyle(color: Colors.grey[400]),
     ),
   );
 }
@@ -77,184 +91,170 @@ Widget buildSearchBar({@required controller}) {
 Widget buildFiltersRow(context, List<FilterModel> filters) {
   return BlocConsumer<AppCubit, AppCubitStates>(
     listener: (context, state) {},
-    builder: (context, state) =>
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                AppCubit.get(context).filterOnTap(context, filters[0]);
-              },
+    builder: (context, state) => Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            AppCubit.get(context).filterOnTap(context, filters[0]);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              width: 140.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35.0),
+                color: AppCubit.get(context).filterColor0,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).primaryColor,
+                    offset: Offset(2, 1),
+                    spreadRadius: 0.5,
+                    blurRadius: 2,
+                  )
+                ],
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Container(
-                  width: 140.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.0),
-                    color: AppCubit
-                        .get(context)
-                        .filterColor0,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        offset: Offset(2, 1),
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 55,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(filters[0].image),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(filters[0].image),
+                          fit: BoxFit.fill,
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          filters[0].name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      filters[0].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: secondaryColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                AppCubit.get(context).filterOnTap1(context, filters[1]);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Container(
-                  width: 140.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.0),
-                    color: AppCubit
-                        .get(context)
-                        .filterColor1,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        offset: Offset(2, 1),
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 55,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(filters[1].image),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          filters[1].name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                AppCubit.get(context).filterOnTap2(context, filters[2]);
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Container(
-                  width: 140.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.0),
-                    color: AppCubit
-                        .get(context)
-                        .filterColor2,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        offset: Offset(2, 1),
-                        spreadRadius: 0.5,
-                        blurRadius: 2,
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 55,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(filters[2].image),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          filters[2].name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
+        GestureDetector(
+          onTap: () {
+            AppCubit.get(context).filterOnTap1(context, filters[1]);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              width: 140.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35.0),
+                color: AppCubit.get(context).filterColor1,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).primaryColor,
+                    offset: Offset(2, 1),
+                    spreadRadius: 0.5,
+                    blurRadius: 2,
+                  )
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(filters[1].image),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      filters[1].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: secondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            AppCubit.get(context).filterOnTap2(context, filters[2]);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              width: 140.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35.0),
+                color: AppCubit.get(context).filterColor2,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).primaryColor,
+                    offset: Offset(2, 1),
+                    spreadRadius: 0.5,
+                    blurRadius: 2,
+                  )
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(filters[2].image),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      filters[2].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: secondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }
 
-Widget buildMenuItem(
-    {MenuItemModel item, context, String addItemTag, String removeItemTag}) {
+Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String removeItemTag}) {
   return Container(
     width: double.infinity,
     height: 120.0,
@@ -263,9 +263,7 @@ Widget buildMenuItem(
       color: Colors.white,
       boxShadow: [
         BoxShadow(
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
           offset: Offset(1.5, 1.5),
           spreadRadius: 0.5,
           blurRadius: 3,
@@ -286,9 +284,7 @@ Widget buildMenuItem(
                 blurRadius: 3,
               )
             ],
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(30),
             image: DecorationImage(
                 image: AssetImage(item.image), fit: BoxFit.cover),
@@ -299,10 +295,7 @@ Widget buildMenuItem(
           children: [
             Expanded(
               child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .6,
+                width: MediaQuery.of(context).size.width * .6,
                 child: Row(
                   children: [
                     SizedBox(
@@ -314,9 +307,7 @@ Widget buildMenuItem(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
@@ -328,10 +319,7 @@ Widget buildMenuItem(
             ),
             Expanded(
               child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * .5,
+                width: MediaQuery.of(context).size.width * .5,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -344,9 +332,7 @@ Widget buildMenuItem(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -370,9 +356,7 @@ Widget buildMenuItem(
                     heroTag: removeItemTag,
                     mini: true,
                     backgroundColor: Colors.white,
-                    foregroundColor: Theme
-                        .of(context)
-                        .primaryColor,
+                    foregroundColor: Theme.of(context).primaryColor,
                     child: Icon(
                       Icons.remove,
                     ),
@@ -397,9 +381,7 @@ Widget buildMenuItem(
                     heroTag: addItemTag,
                     mini: true,
                     backgroundColor: Colors.white,
-                    foregroundColor: Theme
-                        .of(context)
-                        .primaryColor,
+                    foregroundColor: Theme.of(context).primaryColor,
                     child: Icon(
                       Icons.add,
                     ),
@@ -418,10 +400,7 @@ Widget buildErrorScreen(String text, context) {
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -433,9 +412,7 @@ Widget buildErrorScreen(String text, context) {
               text,
               style: TextStyle(
                   fontSize: 30,
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -444,9 +421,7 @@ Widget buildErrorScreen(String text, context) {
           ),
           Icon(
             Icons.error_outline,
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             size: 250,
           ),
         ],
@@ -455,19 +430,16 @@ Widget buildErrorScreen(String text, context) {
   );
 }
 
-Widget buildOrderDetails(
-    {@required context, @required List<SelectedItemsModel> selectedItems}) {
+Widget buildOrderDetails({@required context, @required List<SelectedItemsModel> selectedItems}) {
   double total;
   if (selectedItems.length > 0) {
     total = selectedItems[0].price;
-  }
-  else {
+  } else {
     total = 0;
   }
   for (int i = 1; i < selectedItems.length; i++) {
     total += (selectedItems[i].price * selectedItems[i].count);
   }
-
 
   return Container(
     child: Column(
@@ -476,9 +448,7 @@ Widget buildOrderDetails(
         Text(
           'Order is:',
           style: TextStyle(
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
@@ -489,23 +459,18 @@ Widget buildOrderDetails(
           child: ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemBuilder: (context, index) =>
-                  buildSelectedItemRow(
-                      context: context,
-                      selectedItem: selectedItems[index]),
-              separatorBuilder: (context, index) => SizedBox(height: 20,),
+              itemBuilder: (context, index) => buildSelectedItemRow(
+                  context: context, selectedItem: selectedItems[index]),
+              separatorBuilder: (context, index) => SizedBox(
+                    height: 20,
+                  ),
               itemCount: selectedItems.length),
         ),
         SizedBox(height: 30.0),
         Container(
           height: 2,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          color: Theme
-              .of(context)
-              .primaryColor,
+          width: MediaQuery.of(context).size.width,
+          color: Theme.of(context).primaryColor,
         ),
         SizedBox(height: 30.0),
         Row(
@@ -514,9 +479,7 @@ Widget buildOrderDetails(
             Text(
               'Total Price',
               style: TextStyle(
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
                 fontSize: 27,
                 fontWeight: FontWeight.bold,
               ),
@@ -524,9 +487,7 @@ Widget buildOrderDetails(
             Text(
               "$total EGP",
               style: TextStyle(
-                color: Theme
-                    .of(context)
-                    .primaryColor,
+                color: Theme.of(context).primaryColor,
                 fontSize: 27,
                 fontWeight: FontWeight.w300,
               ),
@@ -538,17 +499,14 @@ Widget buildOrderDetails(
   );
 }
 
-Widget buildSelectedItemRow(
-    {@required context, @required SelectedItemsModel selectedItem}) {
+Widget buildSelectedItemRow({@required context, @required SelectedItemsModel selectedItem}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       Text(
         "${selectedItem.count} ${selectedItem.name}",
         style: TextStyle(
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
           fontSize: 27,
           fontWeight: FontWeight.bold,
         ),
@@ -556,15 +514,11 @@ Widget buildSelectedItemRow(
       Text(
         '${selectedItem.price * selectedItem.count} EGP',
         style: TextStyle(
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
           fontSize: 25,
           fontWeight: FontWeight.w300,
         ),
       ),
     ],
-  )
-  ;
+  );
 }
-

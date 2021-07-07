@@ -18,3 +18,4 @@ class ChairsNumberState extends AppCubitStates {
 }
 class TakeAwayState extends AppCubitStates {}
 class ChangeBranchState extends AppCubitStates {}
+class PasswordState extends AppCubitStates {}

@@ -133,12 +133,12 @@ class AppCubit extends Cubit<AppCubitStates> {
 
   List <int> tables = [];
   List <int> chairs = [];
-  void fillTablesChairsLists ()
-  {
+  void fillTablesChairsLists () {
     for(int i = 0; i < RestaurantsModel.restaurants.length; i++)
       {
         tables.add(RestaurantsModel.restaurants[i].tables);
         chairs.add(RestaurantsModel.restaurants[i].chairs);
       }
   }
+
 }
