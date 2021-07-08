@@ -16,6 +16,7 @@ class PayByCash extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           buildOrderDetails(
             context: context,
