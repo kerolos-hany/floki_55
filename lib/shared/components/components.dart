@@ -290,11 +290,9 @@ Widget buildErrorScreen(String text, context) {
     child: Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 150,
-          ),
           Container(
             child: Text(
               text,

@@ -22,112 +22,114 @@ class LoginScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         this.context = context;
-        return Scaffold(
-          body: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('Assets/Images/bck.jpeg'),
-                    fit: BoxFit.fill)),
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.85,
-                height: 580,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // ignore: deprecated_member_use
-                            RaisedButton(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 40),
+        return SingleChildScrollView(
+          child: Scaffold(
+            body: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('Assets/Images/bck.jpeg'),
+                      fit: BoxFit.fill)),
+              child: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  height: 580,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              // ignore: deprecated_member_use
+                              RaisedButton(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 40),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                      side: BorderSide(color: Colors.white)),
+                                  color: Theme.of(context).primaryColor,
+                                  onPressed: () {},
+                                  child: Text("Log In",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ))),
+                              // ignore: deprecated_member_use
+                              RaisedButton(
+                                padding:
+                                    EdgeInsets.symmetric(vertical: 4, horizontal: 40),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(40),
                                     side: BorderSide(color: Colors.white)),
-                                color: Theme.of(context).primaryColor,
-                                onPressed: () {},
-                                child: Text("Log In",
+                                color: Colors.white,
+                                onPressed: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, SignupScreen.route);
+                                },
+                                child: Text("Sign Up",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 20,
-                                    ))),
-                            // ignore: deprecated_member_use
-                            RaisedButton(
-                              padding:
-                                  EdgeInsets.symmetric(vertical: 4, horizontal: 40),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  side: BorderSide(color: Colors.white)),
-                              color: Colors.white,
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, SignupScreen.route);
-                              },
-                              child: Text("Sign Up",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 20,
-                                  )),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildTextFormField(
-                          context: context,
-                            controller: emailController,
-                            labelText: "Email Address",
-                            textInputType: TextInputType.emailAddress,
-                            icon: Icons.email,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Email must not be empty!";
-                              }
-                              return null;
-                            }),
-                        buildTextFormField(
+                                    )),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          buildTextFormField(
                             context: context,
-                            controller: passwordController,
-                            labelText: "Password",
-                            textInputType: TextInputType.visiblePassword,
-                            icon: Icons.lock,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Password must not be empty!";
-                              }
-                              return null;
+                              controller: emailController,
+                              labelText: "Email Address",
+                              textInputType: TextInputType.emailAddress,
+                              icon: Icons.email,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Email must not be empty!";
+                                }
+                                return null;
+                              }),
+                          buildTextFormField(
+                              context: context,
+                              controller: passwordController,
+                              labelText: "Password",
+                              textInputType: TextInputType.visiblePassword,
+                              icon: Icons.lock,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Password must not be empty!";
+                                }
+                                return null;
+                              },
+                            suffixIcon: isHidden?Icons.visibility_off:Icons.visibility,
+                            onPress: (){
+                              isHidden = !isHidden;
+                              AppCubit.get(context).emit(PasswordState());
                             },
-                          suffixIcon: isHidden?Icons.visibility_off:Icons.visibility,
-                          onPress: (){
-                            isHidden = !isHidden;
-                            AppCubit.get(context).emit(PasswordState());
-                          },
-                          obscure: isHidden,
-                        ),
-                        SizedBox(
-                          height: 35,
-                        ),
-                        _buildLoginBtn(),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        _buildSignInWithText(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildSocialBtnRow(),
-                      ],
+                            obscure: isHidden,
+                          ),
+                          SizedBox(
+                            height: 35,
+                          ),
+                          _buildLoginBtn(),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          _buildSignInWithText(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _buildSocialBtnRow(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -248,7 +248,7 @@ class OutdoorCheckOut extends StatelessWidget {
           Text(
             "$name: ",
             style: TextStyle(
-                fontSize: 24, color: color, fontWeight: FontWeight.w800),
+                fontSize: 20, color: color, fontWeight: FontWeight.w800),
           ),
           FloatingActionButton(
             backgroundColor: iconsBackColor,
