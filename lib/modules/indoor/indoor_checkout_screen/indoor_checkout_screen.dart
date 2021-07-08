@@ -167,12 +167,18 @@ class IndoorCheckOut extends StatelessWidget {
   }
 
   void _payByVisaFunc() {
-    AppCubit.get(context).tables[0] -= AppCubit.get(context).tablesNumber;
-    RestaurantsModel.restaurants[0].tables = AppCubit.get(context).tables[0];
+    AppCubit.get(context).tables[restaurant.id] -=
+        AppCubit.get(context).tablesNumber;
+    AppCubit.get(context).tablesNumber = 0;
+    RestaurantsModel.restaurants[restaurant.id].tables =
+    AppCubit.get(context).tables[restaurant.id];
     AppCubit.get(context).emit(TablesNumberState());
 
-    AppCubit.get(context).chairs[0] -= AppCubit.get(context).chairsNumber;
-    RestaurantsModel.restaurants[0].chairs = AppCubit.get(context).chairs[0];
+    AppCubit.get(context).chairs[restaurant.id] -=
+        AppCubit.get(context).chairsNumber;
+    AppCubit.get(context).chairsNumber = 0;
+    RestaurantsModel.restaurants[restaurant.id].chairs =
+    AppCubit.get(context).chairs[restaurant.id];
     AppCubit.get(context).emit(ChairsNumberState());
 
     orderNumber++;

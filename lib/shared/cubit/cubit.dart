@@ -99,5 +99,4 @@ class AppCubit extends Cubit<AppCubitStates> {
         chairs.add(RestaurantsModel.restaurants[i].chairs);
       }
   }
-
 }
