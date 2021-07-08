@@ -50,17 +50,6 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "${restaurant.name} ${restaurant.branchName}",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                        ),
-                        ),
-                      ),
                       buildSearchBar(controller: searchBarController),
                       Container(
                         height: 110.0,

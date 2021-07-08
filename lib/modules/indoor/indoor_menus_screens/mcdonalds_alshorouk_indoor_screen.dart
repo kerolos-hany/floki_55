@@ -17,62 +17,59 @@ class McdonaldsAlShoroukIndoorMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return WillPopScope(
-      onWillPop: onPop,
-      child: IndoorMenuScreensCreator(
-        tableNumber: tableNumber,
-        searchBarController: searchBarController,
-        restaurant: restaurant,
-        selectedItems: selectedItems,
-      ),
+    return IndoorMenuScreensCreator(
+      tableNumber: tableNumber,
+      searchBarController: searchBarController,
+      restaurant: restaurant,
+      selectedItems: selectedItems,
     );
   }
-  Future<bool> onPop() async {
-    return (await showDialog(
-      context: context,
-      builder: (context) =>
-       AlertDialog(
-        contentTextStyle: TextStyle(
-          color: secondaryColor,
-        ),
-        titleTextStyle: TextStyle(
-          color: secondaryColor,
-        ),
-        backgroundColor: Theme
-            .of(context)
-            .primaryColor
-            .withOpacity(.9),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40),
-        ),
-         title: Text('Are you sure you want to go back?',style: TextStyle(fontWeight: FontWeight.bold),),
-         content: Text('If your cart has items,it will be cleared!',style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('No',
-              style: TextStyle(
-                color: secondaryColor
-                ,)
-              ,),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-              for (int i = 0; i <
-                  RestaurantsModel.restaurants[1].items.length; i++) {
-                if (RestaurantsModel.restaurants[1].items[i].itemCount > 0) {
-                  RestaurantsModel.restaurants[1].items[i].itemCount = 0;
-                }
-              }
-            },
-            child: Text('Yes',
-              style: TextStyle(
-                color: secondaryColor,)
-              ,),
-          ),
-        ],
-      ),
-    )) ?? false;
-  }
+  // Future<bool> onPop() async {
+  //   return (await showDialog(
+  //     context: context,
+  //     builder: (context) =>
+  //      AlertDialog(
+  //       contentTextStyle: TextStyle(
+  //         color: secondaryColor,
+  //       ),
+  //       titleTextStyle: TextStyle(
+  //         color: secondaryColor,
+  //       ),
+  //       backgroundColor: Theme
+  //           .of(context)
+  //           .primaryColor
+  //           .withOpacity(.9),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(40),
+  //       ),
+  //        title: Text('Are you sure you want to go back?',style: TextStyle(fontWeight: FontWeight.bold),),
+  //        content: Text('If your cart has items,it will be cleared!',style: TextStyle(fontWeight: FontWeight.bold)),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           onPressed: () => Navigator.of(context).pop(false),
+  //           child: Text('No',
+  //             style: TextStyle(
+  //               color: secondaryColor
+  //               ,)
+  //             ,),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).pop(true);
+  //             for (int i = 0; i <
+  //                 RestaurantsModel.restaurants[1].items.length; i++) {
+  //               if (RestaurantsModel.restaurants[1].items[i].itemCount > 0) {
+  //                 RestaurantsModel.restaurants[1].items[i].itemCount = 0;
+  //               }
+  //             }
+  //           },
+  //           child: Text('Yes',
+  //             style: TextStyle(
+  //               color: secondaryColor,)
+  //             ,),
+  //         ),
+  //       ],
+  //     ),
+  //   )) ?? false;
+  // }
 }

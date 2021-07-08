@@ -17,12 +17,17 @@ class OpenScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('Assets/Images/first.png'),
-                fit: BoxFit.cover
-            )
+      body: GestureDetector(
+        onTap: (){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('Assets/Images/first.png'),
+                  fit: BoxFit.cover
+              )
+          ),
         ),
       ),
     );

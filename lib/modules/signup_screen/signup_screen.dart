@@ -1,195 +1,184 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:floki/models/user_model.dart';
+import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/login_screen/login_screen.dart';
+import 'package:floki/shared/components/components.dart';
+import 'package:floki/shared/cubit/cubit.dart';
+import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignupScreen extends StatefulWidget {
-
+// ignore: must_be_immutable
+class SignupScreen extends StatelessWidget {
   static String route = "/SignupScreen";
-  @override
-  _LoginFormState createState() => _LoginFormState();
-}
+  BuildContext context;
+  bool isHidden = true;
+  bool isHiddenConfirm = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  var formKeySignup = GlobalKey<FormState>();
+  UserModel newUser;
 
-class _LoginFormState extends State<SignupScreen> {
-
-  bool _isHidden = true;
-  String email, password, phoneNumber;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isHidden = !_isHidden;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //backgroundColor: Colors.white,
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('Assets/Images/signup.jpeg'), fit: BoxFit.fill)),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 165.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // ignore: deprecated_member_use
-                      RaisedButton(
-                        padding:
-                        EdgeInsets.symmetric(vertical: 4, horizontal: 40),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                            side: BorderSide(color: Colors.white)),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, LoginScreen.route);
+    return BlocConsumer<AppCubit, AppCubitStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        this.context = context;
+        return Scaffold(
+          body: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('Assets/Images/bck.jpeg'),
+                    fit: BoxFit.fill)),
+            child: Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.85,
+                height: 600,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Form(
+                    key: formKeySignup,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 40),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                  side: BorderSide(color: Colors.white)),
+                              color: Colors.white,
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, LoginScreen.route);
+                              },
+                              child: Text("Log In",
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 20,
+                                  )),
+                            ),
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 40),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                    side: BorderSide(color: Colors.white)),
+                                color: Theme.of(context).primaryColor,
+                                onPressed: () {},
+                                child: Text("Sign Up",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ))),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        buildTextFormField(
+                            context: context,
+                            controller: emailController,
+                            labelText: "Email Address",
+                            textInputType: TextInputType.emailAddress,
+                            icon: Icons.email,
+                            onChange: (value) {
+                              newUser.userEmail = value;
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Email must not be empty!";
+                              }
+                              return null;
+                            }),
+                        buildTextFormField(
+                          context: context,
+                          controller: passwordController,
+                          labelText: "Password",
+                          textInputType: TextInputType.visiblePassword,
+                          icon: Icons.lock,
+                          onChange: (value) {
+                            newUser.userPassword = value;
                           },
-                        child: Text("Log In",
-                            style: TextStyle(
-                              color: Color(0xff170b66),
-                              fontSize: 18,
-                            )),
-                      ),
-                      // ignore: deprecated_member_use
-                      RaisedButton(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 4, horizontal: 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40),
-                              side: BorderSide(color: Colors.white)),
-                          color: Color(0xff170b66),
-                          onPressed: () {
-                            print("please login");
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Password must not be empty!";
+                            }
+                            return null;
                           },
-                          child: Text("Sign Up",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 19,
-                              ))),
-                    ],
+                          suffixIcon: isHidden
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          onPress: () {
+                            isHidden = !isHidden;
+                            AppCubit.get(context).emit(PasswordState());
+                          },
+                          obscure: isHidden,
+                        ),
+                        buildTextFormField(
+                          context: context,
+                          controller: confirmPasswordController,
+                          labelText: "Confirm Password",
+                          textInputType: TextInputType.visiblePassword,
+                          icon: Icons.lock,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "You must confirm your password!";
+                            }
+                            return null;
+                          },
+                          suffixIcon: isHiddenConfirm
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          onPress: () {
+                            isHiddenConfirm = !isHiddenConfirm;
+                            AppCubit.get(context).emit(PasswordState());
+                          },
+                          obscure: isHiddenConfirm,
+                        ),
+                        buildTextFormField(
+                          controller: phoneNumberController,
+                          labelText: "Phone Number",
+                          textInputType: TextInputType.phone,
+                          context: context,
+                          icon: Icons.phone,
+                          onChange: (value) {
+                            newUser.userPhoneNumber = value;
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Phone Number must not be empty!";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 35,
+                        ),
+                        _buildSignupBtn(),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _buildEmailRow(),
-                  _buildPasswordRow(),
-                  _buildPasswordRowConfirm(),
-                  _buildPhoneNumber(),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            _buildSignupBtn(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildEmailRow() {
-    return Padding(
-      padding: EdgeInsets.all(3),
-      child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        onChanged: (value) {
-          setState(() {
-            email = value;
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.email,
-              color: Color(0xff23195f),
-            ),
-            labelText: 'E-mail or Username',
-            labelStyle: TextStyle(color: Colors.grey[400])),
-      ),
-    );
-  }
-
-  Widget _buildPasswordRow() {
-    return Padding(
-      padding: EdgeInsets.all(2),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        onChanged: (value) {
-          setState(() {
-            password = value;
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Color(0xff23195f),
-            ),
-            suffixIcon: IconButton(
-              onPressed: _toggleVisibility,
-              icon: _isHidden
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
-            ),
-            labelText: 'Password',
-            labelStyle: TextStyle(color: Colors.grey[400])),
-      ),
-    );
-  }
-
-  Widget _buildPasswordRowConfirm() {
-    return Padding(
-      padding: EdgeInsets.all(2),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        onChanged: (value) {
-          setState(() {
-            password = value;
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Color(0xff23195f),
-            ),
-            suffixIcon: IconButton(
-              onPressed: _toggleVisibility,
-              icon: _isHidden
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
-            ),
-            labelText: 'Confirm Password',
-            labelStyle: TextStyle(color: Colors.grey[400])),
-      ),
-    );
-  }
-
-  Widget _buildPhoneNumber() {
-    return Padding(
-      padding: EdgeInsets.all(2),
-      child: TextFormField(
-        keyboardType: TextInputType.number,
-        obscureText: true,
-        onChanged: (value) {
-          setState(() {
-            phoneNumber = value;
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.phone,
-              color: Color(0xff23195f),
-            ),
-            labelText: 'Phone Number',
-            labelStyle: TextStyle(color: Colors.grey[400])),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -201,16 +190,30 @@ class _LoginFormState extends State<SignupScreen> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: BorderSide(color: Colors.white)),
-        color: Color(0xff170b66),
+        color: Theme.of(context).primaryColor,
         onPressed: () {
-          print("NO terpilih");
+          userRegister();
         },
         child: Text("Sign Up",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 19,
+              fontSize: 20,
             )),
       ),
     );
+  }
+
+  void userRegister() {
+    // FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //     email: newUser.userEmail,
+    //     password: newUser.userPassword
+    // )
+    // .then((value) => print(value)).catchError((error){
+    //   print(error.toString());
+    // });
+    if (formKeySignup.currentState.validate()) {
+      UserModel.users.add(newUser);
+      Navigator.pushReplacementNamed(context, LoginScreen.route);
+    }
   }
 }

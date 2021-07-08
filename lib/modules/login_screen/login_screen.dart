@@ -8,21 +8,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
+
   static String route = "/LoginScreen";
   bool isHidden = true;
-  String email, password;
   BuildContext context;
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  bool open;
 
   @override
   Widget build(BuildContext context) {
-    this.context = context;
-    return BlocConsumer<AppCubit, AppCubitStates>(
+    return BlocConsumer<AppCubit, AppCubitStates> (
       listener: (context, state) {},
       builder: (context, state) {
+        this.context = context;
         return Scaffold(
           body: Container(
             width: double.infinity,
@@ -60,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                                 child: Text("Log In",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 19,
+                                      fontSize: 20,
                                     ))),
                             // ignore: deprecated_member_use
                             RaisedButton(
@@ -76,8 +75,8 @@ class LoginScreen extends StatelessWidget {
                               },
                               child: Text("Sign Up",
                                   style: TextStyle(
-                                    color: Color(0xff170b66),
-                                    fontSize: 18,
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 20,
                                   )),
                             ),
                           ],
@@ -93,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                             icon: Icons.email,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return "Email must not be empty";
+                                return "Email must not be empty!";
                               }
                               return null;
                             }),
@@ -105,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                             icon: Icons.lock,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return "Password must not be empty";
+                                return "Password must not be empty!";
                               }
                               return null;
                             },
@@ -117,11 +116,7 @@ class LoginScreen extends StatelessWidget {
                           obscure: isHidden,
                         ),
                         SizedBox(
-                          height: 7.0,
-                        ),
-                        _buildForgotPasswordBtn(),
-                        SizedBox(
-                          height: 17,
+                          height: 35,
                         ),
                         _buildLoginBtn(),
                         SizedBox(
@@ -144,20 +139,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      // ignore: deprecated_member_use
-      child: TextButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        child: Text(
-          'Forgot Password?',
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-      ),
-    );
-  }
-
   Widget _buildLoginBtn() {
     return Container(
       // ignore: deprecated_member_use
@@ -175,7 +156,7 @@ class LoginScreen extends StatelessWidget {
         child: Text("Log In",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 19,
+              fontSize: 20,
             )),
       ),
     );

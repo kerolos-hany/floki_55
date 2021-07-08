@@ -52,17 +52,6 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "${restaurant.name} ${restaurant.branchName}",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                       buildSearchBar(controller: searchBarController),
                       Container(
                         width: MediaQuery.of(context).size.width,
@@ -202,11 +191,13 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
                       ListView.separated(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemBuilder: (context, index) => buildMenuItem(
-                              item: restaurant.items[index],
-                              context: context,
-                              addItemTag: restaurant.items[index].addTag,
-                              removeItemTag: restaurant.items[index].removeTag),
+                          itemBuilder: (context, index) => Center(
+                            child: buildMenuItem(
+                                item: restaurant.items[index],
+                                context: context,
+                                addItemTag: restaurant.items[index].addTag,
+                                removeItemTag: restaurant.items[index].removeTag),
+                          ),
                           separatorBuilder: (context, index) => SizedBox(
                                 height: 20.0,
                               ),
@@ -294,9 +285,8 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => HomeLayout(
                   screenIndex: 2,
-                  restaurant: restaurant,
-                  restaurantName: restaurant.name,
-                  branchName: restaurant.branchName,
+                  restaurantName: restaurantsModel.name,
+                  branchName: branch,
                 ),
               ),
             );
