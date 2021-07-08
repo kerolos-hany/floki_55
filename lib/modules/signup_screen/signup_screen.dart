@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floki/models/user_model.dart';
-import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/login_screen/login_screen.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/cubit/cubit.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: must_be_immutable
 class SignupScreen extends StatelessWidget {
   static String route = "/SignupScreen";
+  String email,password;
   BuildContext context;
   bool isHidden = true;
   bool isHiddenConfirm = true;
@@ -97,7 +97,7 @@ class SignupScreen extends StatelessWidget {
                             textInputType: TextInputType.emailAddress,
                             icon: Icons.email,
                             onChange: (value) {
-                              newUser.userEmail = value;
+                              email = value;
                             },
                             validator: (value) {
                               if (value.isEmpty) {
@@ -112,7 +112,7 @@ class SignupScreen extends StatelessWidget {
                           textInputType: TextInputType.visiblePassword,
                           icon: Icons.lock,
                           onChange: (value) {
-                            newUser.userPassword = value;
+                            password = value;
                           },
                           validator: (value) {
                             if (value.isEmpty) {
@@ -157,7 +157,7 @@ class SignupScreen extends StatelessWidget {
                           context: context,
                           icon: Icons.phone,
                           onChange: (value) {
-                            newUser.userPhoneNumber = value;
+                            // newUser.userPhoneNumber = value;
                           },
                           validator: (value) {
                             if (value.isEmpty) {
@@ -204,16 +204,12 @@ class SignupScreen extends StatelessWidget {
   }
 
   void userRegister() {
-    // FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //     email: newUser.userEmail,
-    //     password: newUser.userPassword
-    // )
-    // .then((value) => print(value)).catchError((error){
-    //   print(error.toString());
-    // });
-    if (formKeySignup.currentState.validate()) {
-      UserModel.users.add(newUser);
-      Navigator.pushReplacementNamed(context, LoginScreen.route);
-    }
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+        email: email, password: password)
+        .then((value) {
+      print(value.user.email);
+      print(value.user.uid);
+    }).catchError((error) {});
   }
 }
