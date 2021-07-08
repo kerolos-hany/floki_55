@@ -1,4 +1,5 @@
 import 'package:floki/layout/home_layout.dart';
+import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/cubit/cubit.dart';
@@ -10,10 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class OutdoorMenuScreensCreator extends StatelessWidget {
-
   var searchBarController;
   List<SelectedItemsModel> selectedItems;
-  BuildContext context;
   RestaurantsModel restaurant;
 
   OutdoorMenuScreensCreator({
@@ -22,201 +21,296 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
     @required this.restaurant,
   });
 
+  BuildContext context;
+  var selectedBranch;
+
   @override
   Widget build(BuildContext context) {
+    AppCubit.get(context).fillTablesChairsLists();
+    selectedBranch = restaurant.branchName;
+
     return BlocConsumer<AppCubit, AppCubitStates>(
-      listener: (context, state) {
-        if(state is TablesNumberState)
-          {
-            restaurant.tables = state.tablesNumber;
-          }
-        if(state is ChairsNumberState)
-        {
-          restaurant.chairs = state.chairsNumber;
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-
         this.context = context;
-        AppCubit.get(context).fillTablesChairsLists();
-        if (AppCubit.get(context).chosenBranch == null) {
-          AppCubit.get(context).chosenBranch = restaurant.branchName;
-          AppCubit.get(context).emit(MenuDropDownState());
-        }
-
         return Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage("Assets/Images/bck.jpeg"),
-              fit: BoxFit.fill,
-            )),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 20.0, horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(restaurant.name,),
-                    buildSearchBar(controller: searchBarController),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Select branch: ",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage("Assets/Images/bck.jpeg"),
+                fit: BoxFit.cover,
+              )),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "${restaurant.name} ${restaurant.branchName}",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Container(
-                            width: 200.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Center(
-                              child: DropdownButton<String>(
-                                value: AppCubit.get(context).chosenBranch,
-                                onChanged: (String newValue) {
-                                  AppCubit.get(context).dropDownOnChange(newValue);
-                                  print(AppCubit.get(context).chosenBranch);
-                                  Navigator.popAndPushNamed(
-                                      context,
-                                      "/LoginScreen/HomeScreen/${restaurant.name}${AppCubit.get(context).chosenBranch}OutdoorMenu/"); //MaterialPageRoute(builder: (context) => HomeLayout(screenIndex: 5))
-                                },
-                                style: TextStyle(
-                                  color: secondaryColor,
-                                  fontSize: 18.5,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                dropdownColor: Theme.of(context).primaryColor,
-                                items: restaurant.branches.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                    onTap: () {},
-                                  );
-                                }).toList(),
+                        ),
+                      ),
+                      buildSearchBar(controller: searchBarController),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Select branch: ",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    Text(
-                      "Available tables: ${AppCubit.get(context).tables[0]} \nAvailable chairs: ${AppCubit.get(context).chairs[0]}",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      height: 110.0,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: buildFiltersRow(context, filters),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60.0,
-                    ),
-                    ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => buildMenuItem(
-                            item: restaurant.items[index],
-                            context: context,
-                            addItemTag: restaurant.items[index].addTag,
-                            removeItemTag: restaurant.items[index].removeTag),
-                        separatorBuilder: (context, index) => SizedBox(
-                              height: 20.0,
+                            SizedBox(
+                              width: 2.0,
                             ),
-                        itemCount: restaurant.items.length),
-                    SizedBox(
-                      height: 70.0,
-                    ),
-                  ],
+                            Container(
+                              width: 130.0,
+                              height: 38.0,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              child: Center(
+                                // ignore: deprecated_member_use
+                                child: RaisedButton(
+                                  color: Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        restaurant.branchName,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_drop_down_circle_outlined,
+                                        color: secondaryColor,
+                                      ),
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text(
+                                          "Branches: ",
+                                          style: TextStyle(
+                                            color: secondaryColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        contentTextStyle: TextStyle(
+                                          color: secondaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                        content: Container(
+                                          width: double.minPositive,
+                                          child: ListView.separated(
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) =>
+                                                buildBranchList(restaurant,
+                                                    restaurant.branches[index]),
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return Container(
+                                                height: 2,
+                                                color: secondaryColor,
+                                                width: double.infinity,
+                                              );
+                                            },
+                                            itemCount:
+                                                restaurant.branches.length,
+                                          ),
+                                        ),
+                                        backgroundColor: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(.9),
+                                      ),
+                                    );
+                                  },
+                                  textColor: secondaryColor,
+                                  padding: EdgeInsets.all(3.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Text(
+                        "Available tables: ${restaurant.tables} \nAvailable chairs: ${restaurant.chairs}",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Container(
+                        height: 110.0,
+                        child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return buildFilter(
+                                  context: context,
+                                  filter: FilterModel.filters[index]);
+                            },
+                            separatorBuilder: (context, index) => SizedBox(
+                                  width: 5.0,
+                                ),
+                            itemCount: FilterModel.filters.length),
+                      ),
+                      SizedBox(
+                        height: 60.0,
+                      ),
+                      ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => buildMenuItem(
+                              item: restaurant.items[index],
+                              context: context,
+                              addItemTag: restaurant.items[index].addTag,
+                              removeItemTag: restaurant.items[index].removeTag),
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: 20.0,
+                              ),
+                          itemCount: restaurant.items.length),
+                      SizedBox(
+                        height: 70.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Container(
-              width: 150,
-              height: 35,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              // ignore: deprecated_member_use
-              child: RaisedButton(
-                color: secondaryColor,
-                onPressed: () {
-                  if (selectedItems.isEmpty) {
-                    for (int i = 0; i < restaurant.items.length; i++) {
-                      if (restaurant.items[i].itemCount > 0) {
-                        selectedItems.add(SelectedItemsModel(
-                            name: restaurant.items[i].name,
-                            count: restaurant.items[i].itemCount,
-                            price: restaurant.items[i].price));
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Container(
+                width: 150,
+                height: 35,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                // ignore: deprecated_member_use
+                child: RaisedButton(
+                  color: secondaryColor,
+                  onPressed: () {
+                    if (selectedItems.isEmpty) {
+                      for (int i = 0; i < restaurant.items.length; i++) {
+                        if (restaurant.items[i].itemCount > 0) {
+                          selectedItems.add(SelectedItemsModel(
+                              name: restaurant.items[i].name,
+                              count: restaurant.items[i].itemCount,
+                              price: restaurant.items[i].price));
+                        }
+                      }
+                    } else {
+                      selectedItems.clear();
+                      for (int i = 0; i < restaurant.items.length; i++) {
+                        if (restaurant.items[i].itemCount > 0) {
+                          selectedItems.add(SelectedItemsModel(
+                              name: restaurant.items[i].name,
+                              count: restaurant.items[i].itemCount,
+                              price: restaurant.items[i].price));
+                        }
                       }
                     }
-                  } else {
-                    selectedItems.clear();
-                    for (int i = 0; i < restaurant.items.length; i++) {
-                      if (restaurant.items[i].itemCount > 0) {
-                        selectedItems.add(SelectedItemsModel(
-                            name: restaurant.items[i].name,
-                            count: restaurant.items[i].itemCount,
-                            price: restaurant.items[i].price));
-                      }
-                    }
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeLayout(
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeLayout(
                           screenIndex: 6,
-                          selectedItems: selectedItems,),
-                    ),
-                  );
-                },
-                textColor: Theme.of(context).primaryColor,
-                child: Center(
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(
-                      fontSize: 18.0,
+                          restaurant: restaurant,
+                          restaurantName: restaurant.name,
+                          branchName: restaurant.branchName,
+                          selectedItems: selectedItems,
+                        ),
+                      ),
+                    );
+                  },
+                  textColor: Theme.of(context).primaryColor,
+                  child: Center(
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      );
+          ],
+        );
       },
+    );
+  }
+
+  Widget buildBranchList(RestaurantsModel restaurantsModel, String branch) {
+    return Container(
+      width: 200.0,
+      child: TextButton(
+        onPressed: () {
+          if (restaurantsModel.branchName != branch) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeLayout(
+                  screenIndex: 2,
+                  restaurant: restaurant,
+                  restaurantName: restaurant.name,
+                  branchName: restaurant.branchName,
+                ),
+              ),
+            );
+          }
+        },
+        child: Text(
+          "$branch",
+          style: TextStyle(
+            color: secondaryColor,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -57,12 +57,11 @@ class FirstScreen extends StatelessWidget {
   }
 
   void _inDoorButtonFunc() {
-    Navigator.pushAndRemoveUntil(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => QrCodeScanner(),
       ),
-      ModalRoute.withName(FirstScreen.route),
     );
   }
 

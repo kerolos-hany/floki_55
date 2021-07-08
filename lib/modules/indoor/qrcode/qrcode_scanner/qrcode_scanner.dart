@@ -80,8 +80,8 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   void _qrCodeTableNumber(String resultBarCode) {
     orderTableNumber = resultBarCode.substring(0, 2);
   }
-  void _qrCodeBranchName(String resultBarCode)
-  {
+
+  void _qrCodeBranchName(String resultBarCode) {
     branchIndexString = resultBarCode.substring(2, 4);
     try {
       branchIndex = int.parse(branchIndexString);
@@ -99,8 +99,11 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     restaurantName = resultBarCode.substring(4, stringLength);
 
     try {
-      chosenRestaurantIndex = RestaurantsModel.restaurants
-          .indexWhere((element) => element.name == restaurantName);
+      chosenRestaurantIndex =
+          RestaurantsModel.restaurants.indexWhere((element) {
+        return element.name == restaurantName &&
+            element.branchName == element.branches[branchIndex];
+      });
     } on Exception catch (e) {
       scanned = true;
       print("Error $e caught!");
@@ -110,12 +113,14 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     }
 
     chosenRestaurant = RestaurantsModel.restaurants[chosenRestaurantIndex];
-    chosenBranch = chosenRestaurant.branches[branchIndex];
+    print(chosenRestaurant.name);
+    print(chosenRestaurant.branchName);
 
     if (!scanned) {
       scanned = true;
       Navigator.pushNamed(context,
-              "/LoginScreen/HomeScreen/${chosenRestaurant.name}${chosenBranch}IndoorMenu/",arguments: orderTableNumber)
+              "/LoginScreen/HomeScreen/${chosenRestaurant.name}${chosenRestaurant.branchName}IndoorMenu/",
+              arguments: orderTableNumber,)
           .then((value) {
         scanned = false;
       });

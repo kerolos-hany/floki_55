@@ -10,12 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class OutdoorCheckOut extends StatelessWidget {
-
-  static String route = "/LoginScreen/HomeScreen/McdonaldsOutdoorMenu/McdonaldsOutdoorCheckOut/";
+  static String route =
+      "/LoginScreen/HomeScreen/McdonaldsOutdoorMenu/McdonaldsOutdoorCheckOut/";
   List<SelectedItemsModel> selectedItems;
+  RestaurantsModel restaurant;
 
-  OutdoorCheckOut(
-      {@required this.selectedItems,});
+  OutdoorCheckOut({@required this.selectedItems, @required this.restaurant});
 
   BuildContext context;
   String takeAwayStatus = "Indoor";
@@ -27,7 +27,6 @@ class OutdoorCheckOut extends StatelessWidget {
       child: BlocConsumer<AppCubit, AppCubitStates>(
         listener: (context, state) {},
         builder: (context, state) {
-
           AppCubit.get(context).fillTablesChairsLists();
           this.context = context;
 
@@ -68,14 +67,18 @@ class OutdoorCheckOut extends StatelessWidget {
                               context: context,
                               name: "Yes",
                               onPress: _takeAwayYesFunc),
-                          SizedBox(width: 50,),
+                          SizedBox(
+                            width: 50,
+                          ),
                           _buildButton(
                               context: context,
                               name: "No",
                               onPress: _takeAwayNoFunc),
                         ],
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       buildCountersRows(
                           context: context,
                           addTag: "addTables",
@@ -92,7 +95,9 @@ class OutdoorCheckOut extends StatelessWidget {
                             AppCubit.get(context).tablesNumberIncrement();
                           },
                           count: AppCubit.get(context).tablesNumber),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       buildCountersRows(
                           context: context,
                           addTag: "addChairs",
@@ -109,7 +114,9 @@ class OutdoorCheckOut extends StatelessWidget {
                             AppCubit.get(context).chairsNumberIncrement();
                           },
                           count: AppCubit.get(context).chairsNumber),
-                      SizedBox(height: 70,),
+                      SizedBox(
+                        height: 70,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -169,13 +176,19 @@ class OutdoorCheckOut extends StatelessWidget {
       takeAwayStatus = "Takeaway";
     } else {
       takeAwayStatus = "Indoor";
-      AppCubit.get(context).tables[0] -= AppCubit.get(context).tablesNumber;
-      RestaurantsModel.restaurants[0].tables = AppCubit.get(context).tables[0];
-      AppCubit.get(context).emit(TablesNumberState(AppCubit.get(context).tablesNumber));
+      AppCubit.get(context).tables[restaurant.id] -=
+          AppCubit.get(context).tablesNumber;
+      AppCubit.get(context).tablesNumber = 0;
+      RestaurantsModel.restaurants[restaurant.id].tables =
+          AppCubit.get(context).tables[restaurant.id];
+      AppCubit.get(context).emit(TablesNumberState());
 
-      AppCubit.get(context).chairs[0] -= AppCubit.get(context).chairsNumber;
-      RestaurantsModel.restaurants[0].chairs = AppCubit.get(context).chairs[0];
-      AppCubit.get(context).emit(ChairsNumberState(AppCubit.get(context).chairsNumber));
+      AppCubit.get(context).chairs[restaurant.id] -=
+          AppCubit.get(context).chairsNumber;
+      AppCubit.get(context).chairsNumber = 0;
+      RestaurantsModel.restaurants[restaurant.id].chairs =
+          AppCubit.get(context).chairs[restaurant.id];
+      AppCubit.get(context).emit(ChairsNumberState());
     }
 
     Navigator.push(
@@ -196,6 +209,8 @@ class OutdoorCheckOut extends StatelessWidget {
     AppCubit.get(context).color = Color(0xff170b66);
     AppCubit.get(context).iconsColor = Color(0xff170b66);
     AppCubit.get(context).iconsBackColor = Colors.white;
+    AppCubit.get(context).tablesNumber = 1;
+    AppCubit.get(context).chairsNumber = 1;
     AppCubit.get(context).emit(TakeAwayState());
   }
 

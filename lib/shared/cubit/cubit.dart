@@ -12,67 +12,26 @@ class AppCubit extends Cubit<AppCubitStates> {
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  String chosenBranch;
-  bool tapped0 = false;
-  bool tapped1 = false;
-  bool tapped2 = false;
-  Color filterColor0;
-  Color filterColor1;
-  Color filterColor2;
-
   void filterOnTap(context, FilterModel filter) {
-    if (filter.id == 0) {
-      tapped0 = !tapped0;
-      print(filter.name);
-      if (tapped0 == true) {
-        filterColor0 = Colors.white;
-        tapped1 = tapped2 = false;
-        filterColor1 = filterColor2 = Theme.of(context).primaryColor;
-        emit(MenuFilter0State());
-      } else //if (filter.id == 0 && tapped == false)
-      {
-        filterColor0 = Theme.of(context).primaryColor;
-        emit(MenuFilter0State());
-      }
-    }
-  }
+      filter.tapped = !filter.tapped;
+      if (filter.tapped == true) {
+        filter.color = Colors.white;
 
-  void filterOnTap1(context, FilterModel filter) {
-    if (filter.id == 1) {
-      tapped1 = !tapped1;
-      print(filter.name);
-      if (tapped1 == true) {
-        filterColor1 = Colors.white;
-        tapped0 = tapped2 = false;
-        filterColor0 = filterColor2 = Theme.of(context).primaryColor;
-        emit(MenuFilter1State());
-      } else //if (filter.id == 0 && tapped == false)
-      {
-        filterColor1 = Theme.of(context).primaryColor;
-        emit(MenuFilter1State());
-      }
-    }
-  }
+        FilterModel.filters.forEach((element) {
+          if(element.id != filter.id)
+            {
+              element.tapped = false;
+              element.color = Theme.of(context).primaryColor;
+            }
+        });
 
-  void filterOnTap2(context, FilterModel filter) {
-    if (filter.id == 2) {
-      tapped2 = !tapped2;
-      print(filter.name);
-      if (tapped2 == true) {
-        filterColor2 = Colors.white;
-        tapped0 = tapped1 = false;
-        filterColor1 = filterColor0 = Theme.of(context).primaryColor;
-        emit(MenuFilter2State());
-      } else //if (filter.id == 0 && tapped == false)
-      {
-        filterColor2 = Theme.of(context).primaryColor;
-        emit(MenuFilter2State());
+        emit(MenuFilterState());
       }
-    }
-  }
-
-  String dropDownOnChange(String newValue) {
-    return chosenBranch = newValue;
+      else
+      {
+        filter.color = Theme.of(context).primaryColor;
+        emit(MenuFilterState());
+      }
   }
 
   void removeItem (MenuItemModel item){
@@ -90,8 +49,8 @@ class AppCubit extends Cubit<AppCubitStates> {
   }
 
   bool takeAway = false;
-  int chairsNumber = 0;
-  int tablesNumber = 0;
+  int chairsNumber = 1;
+  int tablesNumber = 1;
   Widget tableCounterRow;
   Color counterColor = secondaryColor; //Colors.black38;
   Color color = Color(0xff170b66); //Colors.black38;
@@ -101,7 +60,7 @@ class AppCubit extends Cubit<AppCubitStates> {
   void tablesNumberIncrement() {
     if (!takeAway) {
       tablesNumber++;
-      emit(TablesNumberState(tables[0]));
+      emit(TablesNumberState());
     }
     else{}
   }
@@ -109,7 +68,7 @@ class AppCubit extends Cubit<AppCubitStates> {
     if (!takeAway) {
       if (tablesNumber > 0) {
         tablesNumber--;
-        emit(TablesNumberState(tables[0]));
+        emit(TablesNumberState());
       }
     }
     else {}
@@ -117,7 +76,7 @@ class AppCubit extends Cubit<AppCubitStates> {
   void chairsNumberIncrement() {
     if (!takeAway) {
       chairsNumber++;
-      emit(ChairsNumberState(chairs[0]));
+      emit(ChairsNumberState());
     }
     else {}
   }
@@ -125,7 +84,7 @@ class AppCubit extends Cubit<AppCubitStates> {
     if (!takeAway) {
       if (chairsNumber > 0) {
         chairsNumber--;
-        emit(ChairsNumberState(chairs[0]));
+        emit(ChairsNumberState());
       }
     }
     else {}

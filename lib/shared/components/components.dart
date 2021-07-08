@@ -2,9 +2,7 @@ import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/cubit/cubit.dart';
-import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants.dart';
 
 Widget buildTextFormField({
@@ -88,175 +86,232 @@ Widget buildSearchBar({@required controller}) {
   );
 }
 
-Widget buildFiltersRow(context, List<FilterModel> filters) {
-  return BlocConsumer<AppCubit, AppCubitStates>(
-    listener: (context, state) {},
-    builder: (context, state) => Row(
-      children: [
-        GestureDetector(
-          onTap: () {
-            AppCubit.get(context).filterOnTap(context, filters[0]);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              width: 140.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
-                color: AppCubit.get(context).filterColor0,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColor,
-                    offset: Offset(2, 1),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(filters[0].image),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      filters[0].name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
+Widget buildFilter({@required context,@required FilterModel filter}) {
+  return GestureDetector(
+    onTap: () {
+      AppCubit.get(context).filterOnTap(context, filter);
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Container(
+        width: 140.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(35.0),
+          color: filter.color == null? Theme.of(context).primaryColor:filter.color,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.blueGrey[300],
+              offset: Offset(2, 1),
+              spreadRadius: 0.5,
+              blurRadius: 2,
+            )
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 60,
+                height: 55,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(filter.image),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            AppCubit.get(context).filterOnTap1(context, filters[1]);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              width: 140.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
-                color: AppCubit.get(context).filterColor1,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColor,
-                    offset: Offset(2, 1),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                  )
-                ],
+              SizedBox(
+                height: 5,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(filters[1].image),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      filters[1].name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
+              Text(
+                filter.name,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: secondaryColor,
                 ),
               ),
-            ),
+            ],
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            AppCubit.get(context).filterOnTap2(context, filters[2]);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              width: 140.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
-                color: AppCubit.get(context).filterColor2,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColor,
-                    offset: Offset(2, 1),
-                    spreadRadius: 0.5,
-                    blurRadius: 2,
-                  )
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(filters[2].image),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      filters[2].name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     ),
   );
 }
+// Widget buildFiltersRow(context, List<FilterModel> filters) {
+//   return BlocConsumer<AppCubit, AppCubitStates>(
+//     listener: (context, state) {},
+//     builder: (context, state) => Row(
+//       children: [
+//         GestureDetector(
+//           onTap: () {
+//             AppCubit.get(context).filterOnTap(context, filters[0]);
+//           },
+//           child: Padding(
+//             padding: const EdgeInsets.all(5.0),
+//             child: Container(
+//               width: 140.0,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(35.0),
+//                 color: AppCubit.get(context).filterColor0,
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Theme.of(context).primaryColor,
+//                     offset: Offset(2, 1),
+//                     spreadRadius: 0.5,
+//                     blurRadius: 2,
+//                   )
+//                 ],
+//               ),
+//               child: Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     Container(
+//                       width: 60,
+//                       height: 55,
+//                       decoration: BoxDecoration(
+//                         image: DecorationImage(
+//                           image: AssetImage(filters[0].image),
+//                           fit: BoxFit.fill,
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 5,
+//                     ),
+//                     Text(
+//                       filters[0].name,
+//                       style: TextStyle(
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: secondaryColor,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//         GestureDetector(
+//           onTap: () {
+//             AppCubit.get(context).filterOnTap1(context, filters[1]);
+//           },
+//           child: Padding(
+//             padding: const EdgeInsets.all(5.0),
+//             child: Container(
+//               width: 140.0,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(35.0),
+//                 color: AppCubit.get(context).filterColor1,
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Theme.of(context).primaryColor,
+//                     offset: Offset(2, 1),
+//                     spreadRadius: 0.5,
+//                     blurRadius: 2,
+//                   )
+//                 ],
+//               ),
+//               child: Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     Container(
+//                       width: 60,
+//                       height: 55,
+//                       decoration: BoxDecoration(
+//                         image: DecorationImage(
+//                           image: AssetImage(filters[1].image),
+//                           fit: BoxFit.fill,
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 5,
+//                     ),
+//                     Text(
+//                       filters[1].name,
+//                       style: TextStyle(
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: secondaryColor,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//         GestureDetector(
+//           onTap: () {
+//             AppCubit.get(context).filterOnTap2(context, filters[2]);
+//           },
+//           child: Padding(
+//             padding: const EdgeInsets.all(5.0),
+//             child: Container(
+//               width: 140.0,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(35.0),
+//                 color: AppCubit.get(context).filterColor2,
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Theme.of(context).primaryColor,
+//                     offset: Offset(2, 1),
+//                     spreadRadius: 0.5,
+//                     blurRadius: 2,
+//                   )
+//                 ],
+//               ),
+//               child: Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   children: [
+//                     Container(
+//                       width: 60,
+//                       height: 55,
+//                       decoration: BoxDecoration(
+//                         image: DecorationImage(
+//                           image: AssetImage(filters[2].image),
+//                           fit: BoxFit.fill,
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 5,
+//                     ),
+//                     Text(
+//                       filters[2].name,
+//                       style: TextStyle(
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: secondaryColor,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
-Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String removeItemTag}) {
+Widget buildMenuItem({@required MenuItemModel item,
+  @required BuildContext context,
+  @required String addItemTag,
+  @required String removeItemTag}) {
   return Container(
-    width: double.infinity,
+    width: MediaQuery.of(context).size.width * 0.7,
     height: 120.0,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30.0),
@@ -295,7 +350,7 @@ Widget buildMenuItem({MenuItemModel item, context, String addItemTag, String rem
           children: [
             Expanded(
               child: Container(
-                width: MediaQuery.of(context).size.width * .6,
+                width: MediaQuery.of(context).size.width * 0.6,
                 child: Row(
                   children: [
                     SizedBox(

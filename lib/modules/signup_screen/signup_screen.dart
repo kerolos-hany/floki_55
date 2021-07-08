@@ -45,7 +45,7 @@ class _LoginFormState extends State<SignupScreen> {
                             side: BorderSide(color: Colors.white)),
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.popAndPushNamed(context, LoginScreen.route);
+                          Navigator.pushReplacementNamed(context, LoginScreen.route);
                           },
                         child: Text("Log In",
                             style: TextStyle(

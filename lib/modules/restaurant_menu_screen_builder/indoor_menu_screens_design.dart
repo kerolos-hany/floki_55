@@ -1,4 +1,5 @@
 import 'package:floki/layout/home_layout.dart';
+import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/cubit/cubit.dart';
@@ -30,12 +31,6 @@ class IndoorMenuScreensCreator extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
 
-        this.context = context;
-        if (AppCubit.get(context).chosenBranch == null) {
-          AppCubit.get(context).chosenBranch = restaurant.branchName;
-          AppCubit.get(context).emit(MenuDropDownState());
-        }
-
         return Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -55,22 +50,26 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        restaurant.name,
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "${restaurant.name} ${restaurant.branchName}",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                        ),
+                        ),
                       ),
                       buildSearchBar(controller: searchBarController),
                       Container(
                         height: 110.0,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: buildFiltersRow(context, filters),
+                        child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context,index) => buildFilter(context: context,filter: FilterModel.filters[index]),
+                            separatorBuilder: (context,index) => SizedBox(width: 5.0,),
+                            itemCount: FilterModel.filters.length)
                         ),
-                      ),
                       SizedBox(
                         height: 30.0,
                       ),
@@ -108,6 +107,7 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                 color: secondaryColor,
                 onPressed: () {
                   if (selectedItems.isEmpty) {
+
                     for(int i = 0; i < restaurant.items.length; i++)
                       {
                         if(restaurant.items[i].itemCount > 0)
@@ -133,9 +133,13 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                         }
                       }
                     }
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeLayout(
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeLayout(
                     screenIndex: 7,
-                    selectedItems: selectedItems,),),);
+                    selectedItems: selectedItems,
+                      restaurant: restaurant,
+                  ),),
+                  );
                 },
                 textColor: Theme.of(context).primaryColor,
                 child: Center(

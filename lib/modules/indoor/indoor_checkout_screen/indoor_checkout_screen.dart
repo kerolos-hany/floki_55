@@ -10,17 +10,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class IndoorCheckOut extends StatelessWidget {
-
-  static String route = "/LoginScreen/HomeScreen/McdonaldsIndoorMenu/McdonaldsIndoorCheckOut/";
+  static String route =
+      "/LoginScreen/HomeScreen/McdonaldsIndoorMenu/McdonaldsIndoorCheckOut/";
   List<SelectedItemsModel> selectedItems;
   int tables;
   int chairs;
+  int orderNumber = 0;
+  RestaurantsModel restaurant;
 
-  IndoorCheckOut(
-      {@required this.selectedItems,});
+  IndoorCheckOut({@required this.selectedItems, @required this.restaurant});
 
   BuildContext context;
-  String takeAwayStatus = "Indoor";
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,9 @@ class IndoorCheckOut extends StatelessWidget {
       child: BlocConsumer<AppCubit, AppCubitStates>(
         listener: (context, state) {},
         builder: (context, state) {
-
+          Future.delayed(Duration(days: 1), () {
+            orderNumber = 0;
+          });
           AppCubit.get(context).fillTablesChairsLists();
           this.context = context;
 
@@ -51,7 +53,9 @@ class IndoorCheckOut extends StatelessWidget {
                     children: [
                       buildOrderDetails(
                           selectedItems: selectedItems, context: context),
-                      SizedBox(height: 70,),
+                      SizedBox(
+                        height: 70,
+                      ),
                       buildCountersRows(
                           context: context,
                           addTag: "addTables",
@@ -68,7 +72,9 @@ class IndoorCheckOut extends StatelessWidget {
                             AppCubit.get(context).tablesNumberIncrement();
                           },
                           count: AppCubit.get(context).tablesNumber),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       buildCountersRows(
                           context: context,
                           addTag: "addChairs",
@@ -85,7 +91,9 @@ class IndoorCheckOut extends StatelessWidget {
                             AppCubit.get(context).chairsNumberIncrement();
                           },
                           count: AppCubit.get(context).chairsNumber),
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Text(
                         'Pay By?',
                         style: TextStyle(
@@ -94,7 +102,9 @@ class IndoorCheckOut extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 25,),
+                      SizedBox(
+                        height: 25,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -105,7 +115,9 @@ class IndoorCheckOut extends StatelessWidget {
                               width: 130,
                               height: 70,
                               fontSize: 30),
-                          SizedBox(width: 50,),
+                          SizedBox(
+                            width: 50,
+                          ),
                           _buildButton(
                               context: context,
                               name: "Visa",
@@ -155,43 +167,51 @@ class IndoorCheckOut extends StatelessWidget {
   }
 
   void _payByVisaFunc() {
-    print("Visa");
+    AppCubit.get(context).tables[0] -= AppCubit.get(context).tablesNumber;
+    RestaurantsModel.restaurants[0].tables = AppCubit.get(context).tables[0];
+    AppCubit.get(context).emit(TablesNumberState());
 
-    if (AppCubit.get(context).takeAway) {
-      takeAwayStatus = "Takeaway";
-    } else {
-      takeAwayStatus = "Indoor";
+    AppCubit.get(context).chairs[0] -= AppCubit.get(context).chairsNumber;
+    RestaurantsModel.restaurants[0].chairs = AppCubit.get(context).chairs[0];
+    AppCubit.get(context).emit(ChairsNumberState());
 
-      AppCubit.get(context).tables[0] -= AppCubit.get(context).tablesNumber;
-      RestaurantsModel.restaurants[0].tables = AppCubit.get(context).tables[0];
-      AppCubit.get(context).emit(TablesNumberState(AppCubit.get(context).tablesNumber));
-
-      AppCubit.get(context).chairs[0] -= AppCubit.get(context).chairsNumber;
-      RestaurantsModel.restaurants[0].chairs = AppCubit.get(context).chairs[0];
-      AppCubit.get(context).emit(ChairsNumberState(AppCubit.get(context).chairsNumber));
-    }
-
+    orderNumber++;
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => HomeLayout(
           screenIndex: 8,
           selectedItems: selectedItems,
+          orderNumber: orderNumber,
         ),
       ),
     );
   }
 
   void _payByCashFunc() {
-    print("Cash");
+    AppCubit.get(context).tables[restaurant.id] -=
+        AppCubit.get(context).tablesNumber;
+    AppCubit.get(context).tablesNumber = 0;
+    RestaurantsModel.restaurants[restaurant.id].tables =
+        AppCubit.get(context).tables[restaurant.id];
+    AppCubit.get(context).emit(TablesNumberState());
 
-    AppCubit.get(context).tables[0] -= AppCubit.get(context).tablesNumber;
-    RestaurantsModel.restaurants[0].tables = AppCubit.get(context).tables[0];
-    AppCubit.get(context).emit(TablesNumberState(AppCubit.get(context).tablesNumber));
+    AppCubit.get(context).chairs[restaurant.id] -=
+        AppCubit.get(context).chairsNumber;
+    AppCubit.get(context).chairsNumber = 0;
+    RestaurantsModel.restaurants[restaurant.id].chairs =
+        AppCubit.get(context).chairs[restaurant.id];
+    AppCubit.get(context).emit(ChairsNumberState());
 
-    AppCubit.get(context).chairs[0] -= AppCubit.get(context).chairsNumber;
-    RestaurantsModel.restaurants[0].chairs = AppCubit.get(context).chairs[0];
-    AppCubit.get(context).emit(ChairsNumberState(AppCubit.get(context).chairsNumber));
+    orderNumber++;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomeLayout(
+                  screenIndex: 9,
+                  selectedItems: selectedItems,
+                  orderNumber: orderNumber,
+                )));
   }
 
   Widget buildCountersRows({
@@ -199,7 +219,7 @@ class IndoorCheckOut extends StatelessWidget {
     Function onPressPlus,
     Function onPressMinus,
     @required String name,
-    int count,
+    int count = 1,
     Color counterColor,
     Color iconsColor,
     Color color,

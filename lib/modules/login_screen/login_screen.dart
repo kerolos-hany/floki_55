@@ -15,6 +15,7 @@ class LoginScreen extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool open;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                                   side: BorderSide(color: Colors.white)),
                               color: Colors.white,
                               onPressed: () {
-                                Navigator.popAndPushNamed(
+                                Navigator.pushReplacementNamed(
                                     context, SignupScreen.route);
                               },
                               child: Text("Sign Up",
@@ -157,6 +158,29 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildLoginBtn() {
+    return Container(
+      // ignore: deprecated_member_use
+      child: RaisedButton(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 70),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: Colors.white)),
+        color: Theme.of(context).primaryColor,
+        onPressed: () {
+          if (formKey.currentState.validate()) {
+            Navigator.pushReplacementNamed(context, FirstScreen.route);
+          }
+        },
+        child: Text("Log In",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 19,
+            )),
+      ),
+    );
+  }
+
   Widget _buildSignInWithText() {
     return Column(
       children: <Widget>[
@@ -176,29 +200,6 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildLoginBtn() {
-    return Container(
-      // ignore: deprecated_member_use
-      child: RaisedButton(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 70),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(color: Colors.white)),
-        color: Theme.of(context).primaryColor,
-        onPressed: () {
-          if (formKey.currentState.validate()) {
-            Navigator.pushNamed(context, FirstScreen.route);
-          }
-        },
-        child: Text("Log In",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 19,
-            )),
-      ),
     );
   }
 

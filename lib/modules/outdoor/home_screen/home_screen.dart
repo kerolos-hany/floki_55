@@ -52,7 +52,6 @@ class HomeScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return _buildRestaurantItem(RestaurantsModel.restaurants[index], context);
-                        AppCubit.get(context).emit(RestaurantItemsState());
                         },
                       itemCount: RestaurantsModel.restaurants.length)
                 ],
@@ -72,13 +71,13 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(3),
       child: GestureDetector(
         onTap: () {
-          print(restaurant.id);
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => HomeLayout(
                 screenIndex: restaurant.id < outdoorMenuScreens.length? 2: 4,
-                restaurantName: restaurant.id < outdoorMenuScreens.length? "${restaurant.name}${restaurant.branchName}": "McdonaldsSheraton",
+                restaurantName: restaurant.id < outdoorMenuScreens.length? "${restaurant.name}": "Mcdonalds",
+                branchName: restaurant.name == "Mcdonalds"?restaurant.branchName:"Sheraton",
               ),
             ),
           );
