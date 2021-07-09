@@ -37,7 +37,6 @@ class IndoorCheckOut extends StatelessWidget {
 
           return Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: AssetImage("Assets/Images/bck.jpeg"),

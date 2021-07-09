@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "592311951848",
+    "firebase_url": "https://floki5-default-rtdb.firebaseio.com",
+    "project_id": "floki5",
+    "storage_bucket": "floki5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592311951848:android:379876a0ee92ddf94e445d",
+        "android_client_info": {
+          "package_name": "com.example.floki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592311951848-hojp39t58013mqvai4h0riv5r6vvq0fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoBtQ4KZgmpfEJ7CksQnqCH-7oT33Ov3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592311951848-hojp39t58013mqvai4h0riv5r6vvq0fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592311951848:android:62cc6adc47ea24c24e445d",
+        "android_client_info": {
+          "package_name": "com.example.untitled1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592311951848-hojp39t58013mqvai4h0riv5r6vvq0fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoBtQ4KZgmpfEJ7CksQnqCH-7oT33Ov3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592311951848-hojp39t58013mqvai4h0riv5r6vvq0fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

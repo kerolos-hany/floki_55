@@ -22,15 +22,15 @@ class LoginScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         this.context = context;
-        return SingleChildScrollView(
-          child: Scaffold(
-            body: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('Assets/Images/bck.jpeg'),
-                      fit: BoxFit.fill)),
-              child: Center(
+        return Scaffold(
+          body: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('Assets/Images/bck.jpeg'),
+                    fit: BoxFit.fill)),
+            child: Center(
+              child: SingleChildScrollView(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   height: 580,
@@ -123,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(
                             height: 15,
                           ),
-                          _buildSignInWithText(),
+                          _buildLoginWithText(),
                           SizedBox(
                             height: 10,
                           ),
@@ -164,7 +164,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSignInWithText() {
+  Widget _buildLoginWithText() {
     return Column(
       children: <Widget>[
         Text(
@@ -176,7 +176,7 @@ class LoginScreen extends StatelessWidget {
         ),
         SizedBox(height: 10.0),
         Text(
-          'Sign in with',
+          'Login with',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontWeight: FontWeight.w500,

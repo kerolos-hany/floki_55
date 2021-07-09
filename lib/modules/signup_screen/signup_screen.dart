@@ -28,15 +28,15 @@ class SignupScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         this.context = context;
-        return SingleChildScrollView(
-          child: Scaffold(
-            body: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('Assets/Images/bck.jpeg'),
-                      fit: BoxFit.fill)),
-              child: Center(
+        return Scaffold(
+          body: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('Assets/Images/bck.jpeg'),
+                    fit: BoxFit.fill)),
+            child: Center(
+              child: SingleChildScrollView(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   height: 600,

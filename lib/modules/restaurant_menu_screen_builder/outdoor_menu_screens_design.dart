@@ -2,6 +2,7 @@ import 'package:floki/layout/home_layout.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
+import 'package:floki/modules/outdoor/home_screen/home_screen.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
@@ -280,6 +281,7 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
       child: TextButton(
         onPressed: () {
           if (restaurantsModel.branchName != branch) {
+            Navigator.pop(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
