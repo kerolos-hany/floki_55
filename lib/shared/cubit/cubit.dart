@@ -12,10 +12,31 @@ class AppCubit extends Cubit<AppCubitStates> {
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
 
-  void filterOnTap(context, FilterModel filter) {
+  List<MenuItemModel> filteredListItems = [];
+
+  void filterOnTap(
+      {@required context,
+      @required FilterModel filter,
+      @required RestaurantsModel restaurant}) {
       filter.tapped = !filter.tapped;
       if (filter.tapped == true) {
         filter.color = Colors.white;
+
+        filteredListItems.clear();
+
+        restaurant.items.forEach((element) {
+          if(element.type == filter.name)
+          {
+            if (filteredListItems.isEmpty) {
+              filteredListItems.add(element);
+              emit(MenuItemState(filteredList: filteredListItems));
+            }
+            else{
+              filteredListItems.add(element);
+            }
+            emit(MenuItemState(filteredList: filteredListItems));
+          }
+        });
 
         FilterModel.filters.forEach((element) {
           if(element.id != filter.id)
@@ -24,13 +45,14 @@ class AppCubit extends Cubit<AppCubitStates> {
               element.color = Theme.of(context).primaryColor;
             }
         });
-
         emit(MenuFilterState());
       }
       else
       {
         filter.color = Theme.of(context).primaryColor;
         emit(MenuFilterState());
+        filteredListItems.clear();
+        emit(MenuItemState(filteredList: filteredListItems));
       }
   }
 
@@ -99,4 +121,10 @@ class AppCubit extends Cubit<AppCubitStates> {
         chairs.add(RestaurantsModel.restaurants[i].chairs);
       }
   }
+  int orderNumber = 0;
+
+  void resetOrderNumber(){
+  Future.delayed(Duration(days: 1), () {
+  orderNumber = 0;
+  });}
 }

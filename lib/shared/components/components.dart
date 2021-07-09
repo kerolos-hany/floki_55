@@ -1,5 +1,6 @@
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
+import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:flutter/material.dart';
@@ -84,10 +85,10 @@ Widget buildSearchBar({@required controller}) {
   );
 }
 
-Widget buildFilter({@required context,@required FilterModel filter}) {
+Widget buildFilter({@required context,@required FilterModel filter,@required RestaurantsModel restaurant}) {
   return GestureDetector(
     onTap: () {
-      AppCubit.get(context).filterOnTap(context, filter);
+      AppCubit.get(context).filterOnTap(context: context, filter: filter, restaurant: restaurant);
     },
     child: Padding(
       padding: const EdgeInsets.all(5.0),
@@ -317,13 +318,9 @@ Widget buildErrorScreen(String text, context) {
 }
 
 Widget buildOrderDetails({@required context, @required List<SelectedItemsModel> selectedItems}) {
-  double total;
-  if (selectedItems.length > 0) {
-    total = selectedItems[0].price;
-  } else {
-    total = 0;
-  }
-  for (int i = 1; i < selectedItems.length; i++) {
+  double total = 0;
+
+  for (int i = 0; i < selectedItems.length; i++) {
     total += (selectedItems[i].price * selectedItems[i].count);
   }
 

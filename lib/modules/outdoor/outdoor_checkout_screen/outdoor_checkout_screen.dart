@@ -196,9 +196,16 @@ class OutdoorCheckOut extends StatelessWidget {
         builder: (context) => HomeLayout(
           screenIndex: 8,
           selectedItems: selectedItems,
+          orderNumber: AppCubit.get(context).orderNumber,
+          restaurant: restaurant,
         ),
       ),
-    );
+    ).then((value) => restaurant.items.forEach((element) {
+      if(element.itemCount > 0)
+      {
+        element.itemCount = 0;
+      }
+    }));
   }
 
   void _takeAwayNoFunc() {

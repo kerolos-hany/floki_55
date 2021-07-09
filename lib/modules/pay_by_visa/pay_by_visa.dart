@@ -1,3 +1,4 @@
+import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
@@ -11,7 +12,8 @@ class PayByVisaScreen extends StatelessWidget {
 
   static String route = "/LoginScreen/HomeScreen/McdonaldsOutdoorMenu/McdonaldsOutdoorCheckOut/PayByVisa";
   List<SelectedItemsModel> selectedItems;
-  PayByVisaScreen({@required this.selectedItems});
+  RestaurantsModel restaurant;
+  PayByVisaScreen({@required this.selectedItems, @required this.restaurant});
 
   String visaNumber, password, validThru;
   BuildContext context;
@@ -165,7 +167,7 @@ class PayByVisaScreen extends StatelessWidget {
         ),
         color: Theme.of(context).primaryColor,
         onPressed: () {
-          print("Submit");
+
         },
         child: Text(
           "Submit",

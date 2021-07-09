@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    initialScreen = HomeScreen.route;
+    initialScreen = OpenScreen.route;
 
     return BlocProvider(
       create: (context) => AppCubit(),

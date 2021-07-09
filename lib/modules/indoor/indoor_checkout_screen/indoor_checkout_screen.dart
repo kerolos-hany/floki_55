@@ -15,7 +15,6 @@ class IndoorCheckOut extends StatelessWidget {
   List<SelectedItemsModel> selectedItems;
   int tables;
   int chairs;
-  int orderNumber = 0;
   RestaurantsModel restaurant;
 
   IndoorCheckOut({@required this.selectedItems, @required this.restaurant});
@@ -29,9 +28,6 @@ class IndoorCheckOut extends StatelessWidget {
       child: BlocConsumer<AppCubit, AppCubitStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          Future.delayed(Duration(days: 1), () {
-            orderNumber = 0;
-          });
           AppCubit.get(context).fillTablesChairsLists();
           this.context = context;
 
@@ -180,17 +176,23 @@ class IndoorCheckOut extends StatelessWidget {
     AppCubit.get(context).chairs[restaurant.id];
     AppCubit.get(context).emit(ChairsNumberState());
 
-    orderNumber++;
+    AppCubit.get(context).orderNumber++;
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => HomeLayout(
           screenIndex: 8,
           selectedItems: selectedItems,
-          orderNumber: orderNumber,
+          orderNumber: AppCubit.get(context).orderNumber,
+          restaurant: restaurant,
         ),
       ),
-    );
+    ).then((value) => restaurant.items.forEach((element) {
+      if(element.itemCount > 0)
+        {
+          element.itemCount = 0;
+        }
+    }));
   }
 
   void _payByCashFunc() {
@@ -208,15 +210,21 @@ class IndoorCheckOut extends StatelessWidget {
         AppCubit.get(context).chairs[restaurant.id];
     AppCubit.get(context).emit(ChairsNumberState());
 
-    orderNumber++;
+    AppCubit.get(context).orderNumber++;
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => HomeLayout(
-                  screenIndex: 9,
-                  selectedItems: selectedItems,
-                  orderNumber: orderNumber,
-                )));
+              screenIndex: 9,
+              selectedItems: selectedItems,
+              orderNumber: AppCubit.get(context).orderNumber,
+              restaurant: restaurant,
+            ))).then((value) => restaurant.items.forEach((element) {
+      if(element.itemCount > 0)
+      {
+        element.itemCount = 0;
+      }
+    }));
   }
 
   Widget buildCountersRows({

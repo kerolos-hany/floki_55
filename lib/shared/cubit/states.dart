@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 abstract class AppCubitStates {}
 
 class AppInitialState extends AppCubitStates {}
@@ -17,3 +19,7 @@ class ChairsNumberState extends AppCubitStates {
 class TakeAwayState extends AppCubitStates {}
 class ChangeBranchState extends AppCubitStates {}
 class PasswordState extends AppCubitStates {}
+class MenuItemState extends AppCubitStates {
+  List filteredList;
+  MenuItemState({@required this.filteredList});
+}

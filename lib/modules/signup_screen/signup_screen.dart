@@ -206,6 +206,9 @@ class SignupScreen extends StatelessWidget {
   }
 
   void userRegister() {
+    if (formKeySignup.currentState.validate()) {
+      Navigator.pushReplacementNamed(context, LoginScreen.route);
+    }
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
         email: email, password: password)

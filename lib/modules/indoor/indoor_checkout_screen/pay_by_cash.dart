@@ -1,3 +1,4 @@
+import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/shared/components/components.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,9 @@ class PayByCash extends StatelessWidget {
   static String route = "/LoginScreen/HomeScreen/McdonaldsIndoorMenu/McdonaldsIndoorCheckOut/PayByCash";
   List<SelectedItemsModel> selectedItems;
   int orderNumber;
+  RestaurantsModel restaurant;
 
-  PayByCash({@required this.selectedItems, @required this.orderNumber});
+  PayByCash({@required this.selectedItems, @required this.orderNumber, @required this.restaurant});
 
   @override
   Widget build(BuildContext context) {

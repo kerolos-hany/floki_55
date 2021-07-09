@@ -10,7 +10,7 @@ class OpenScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     if (initialScreen == "/") {
-      Future.delayed(Duration(milliseconds: 1500), () {
+      Future.delayed(Duration(milliseconds: 2000), () {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
         initialScreen = "";
       });

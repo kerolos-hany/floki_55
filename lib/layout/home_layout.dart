@@ -50,10 +50,11 @@ class HomeLayout extends StatelessWidget {
         selectedItems: selectedItems,
         restaurant: restaurant,
       ),
-      8: PayByVisaScreen(selectedItems: selectedItems),
+      8: PayByVisaScreen(selectedItems: selectedItems, restaurant: restaurant,),
       9: PayByCash(
         selectedItems: selectedItems,
         orderNumber: orderNumber,
+        restaurant: restaurant,
       ),
     };
 
