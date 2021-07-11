@@ -1,6 +1,5 @@
 import 'package:floki/layout/home_layout.dart';
 import 'package:floki/models/restaurants_model.dart';
-import 'package:floki/shared/components/components.dart';
 import 'package:floki/shared/components/constants.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/cubit/states.dart';
@@ -11,9 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeScreen extends StatelessWidget {
 
   static String route = "/LoginScreen/HomeScreen/";
-  double screenWidth;
   BuildContext context;
-  var searchBarController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class HomeScreen extends StatelessWidget {
           decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("Assets/Images/bck.jpeg"),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               )),
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -38,7 +35,6 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildSearchBar(controller: searchBarController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -64,9 +60,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildRestaurantItem(RestaurantsModel restaurant, context) {
-
-    screenWidth = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: const EdgeInsets.all(3),
       child: GestureDetector(
@@ -77,7 +70,7 @@ class HomeScreen extends StatelessWidget {
               builder: (context) => HomeLayout(
                 screenIndex: restaurant.id < outdoorMenuScreens.length? 2: 4,
                 restaurantName: restaurant.id < outdoorMenuScreens.length? "${restaurant.name}": "Mcdonalds",
-                branchName: restaurant.name == "Mcdonalds"?restaurant.branchName:"Sheraton",
+                branchName: restaurant.id < outdoorMenuScreens.length?restaurant.branchName:"Sheraton",
               ),
             ),
           );

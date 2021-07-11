@@ -19,7 +19,7 @@ class McdonaldsAlShoroukIndoorMenu extends StatelessWidget {
     this.context = context;
     return IndoorMenuScreensCreator(
       tableNumber: tableNumber,
-      searchBarController: searchBarController,
+      // searchBarController: searchBarController,
       restaurant: restaurant,
       selectedItems: selectedItems,
     );

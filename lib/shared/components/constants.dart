@@ -1,7 +1,6 @@
 import 'package:floki/layout/home_layout.dart';
 import 'package:floki/layout/open_screen.dart';
 import 'package:floki/models/menu_items_model.dart';
-import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/indoor/indoor_checkout_screen/indoor_checkout_screen.dart';
 import 'package:floki/modules/indoor/indoor_checkout_screen/pay_by_cash.dart';
@@ -36,7 +35,7 @@ Map restaurantIndexer = {
   "McdonaldsAlShorouk": 1,
 };
 
-List<SelectedItemsModel> items = [SelectedItemsModel(name: "Big Mac", count: 1,price: 150.0)];
+// List<SelectedItemsModel> items = [SelectedItemsModel(name: "Big Mac", count: 1,price: 150.0)];
 
 Map<String, WidgetBuilder> routes = {
   OpenScreen.route: (context) => OpenScreen(),

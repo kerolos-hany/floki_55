@@ -23,3 +23,17 @@ class MenuItemState extends AppCubitStates {
   List filteredList;
   MenuItemState({@required this.filteredList});
 }
+class LoginLoadingState extends AppCubitStates {}
+class LoginSuccessState extends AppCubitStates
+{
+  final String uId;
+
+  LoginSuccessState(this.uId);
+}
+
+class LoginErrorState extends AppCubitStates
+{
+  final String error;
+
+  LoginErrorState(this.error);
+}

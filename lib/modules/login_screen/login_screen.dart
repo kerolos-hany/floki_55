@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/signup_screen/signup_screen.dart';
 import 'package:floki/shared/components/components.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginScreen extends StatelessWidget {
 
   static String route = "/LoginScreen";
+  String email, password = "";
   bool isHidden = true;
   BuildContext context;
   TextEditingController passwordController = TextEditingController();
@@ -28,9 +30,10 @@ class LoginScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('Assets/Images/bck.jpeg'),
-                    fit: BoxFit.fill)),
+                    fit: BoxFit.cover)),
             child: Center(
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   height: 580,
@@ -91,6 +94,9 @@ class LoginScreen extends StatelessWidget {
                               labelText: "Email Address",
                               textInputType: TextInputType.emailAddress,
                               icon: Icons.email,
+                              onChange: (value) {
+                              email = value;
+                              },
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Email must not be empty!";
@@ -103,6 +109,9 @@ class LoginScreen extends StatelessWidget {
                               labelText: "Password",
                               textInputType: TextInputType.visiblePassword,
                               icon: Icons.lock,
+                              onChange: (value) {
+                                email = value;
+                              },
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Password must not be empty!";
@@ -120,14 +129,6 @@ class LoginScreen extends StatelessWidget {
                             height: 35,
                           ),
                           _buildLoginBtn(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          _buildLoginWithText(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          _buildSocialBtnRow(),
                         ],
                       ),
                     ),
@@ -152,6 +153,11 @@ class LoginScreen extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         onPressed: () {
           if (formKey.currentState.validate()) {
+            FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
+                .then((value) => value)
+                .catchError((error) {
+              print("Error $error caught!");
+            }) ;
             Navigator.pushReplacementNamed(context, FirstScreen.route);
           }
         },
@@ -163,85 +169,84 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+  // Widget _buildLoginWithText() {
+  //   return Column(
+  //     children: <Widget>[
+  //       Text(
+  //         '- OR -',
+  //         style: TextStyle(
+  //           color: Theme.of(context).primaryColor,
+  //           fontWeight: FontWeight.w500,
+  //         ),
+  //       ),
+  //       SizedBox(height: 10.0),
+  //       Text(
+  //         'Login with',
+  //         style: TextStyle(
+  //           color: Theme.of(context).primaryColor,
+  //           fontWeight: FontWeight.w500,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildLoginWithText() {
-    return Column(
-      children: <Widget>[
-        Text(
-          '- OR -',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        SizedBox(height: 10.0),
-        Text(
-          'Login with',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildSocialBtn(Function onTap, AssetImage logo) {
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: Container(
+  //       height: 42.5,
+  //       width: 42.5,
+  //       decoration: BoxDecoration(
+  //         shape: BoxShape.circle,
+  //         color: Colors.white,
+  //         boxShadow: [
+  //           BoxShadow(
+  //             color: Colors.black26,
+  //             offset: Offset(0, 2),
+  //             blurRadius: 6.0,
+  //           ),
+  //         ],
+  //         image: DecorationImage(
+  //           image: logo,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 42.5,
-        width: 42.5,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtnRow() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => print('Login with Facebook'),
-            AssetImage(
-              'Assets/Images/face.png',
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          _buildSocialBtn(
-            () => print('Login with Google'),
-            AssetImage(
-              'Assets/Images/google.png',
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          _buildSocialBtn(
-            () => print('Login with Twitter'),
-            AssetImage(
-              'Assets/Images/twitter.png',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildSocialBtnRow() {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(vertical: 20.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         _buildSocialBtn(
+  //           () => print('Login with Facebook'),
+  //           AssetImage(
+  //             'Assets/Images/face.png',
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           width: 20,
+  //         ),
+  //         _buildSocialBtn(
+  //           () => print('Login with Google'),
+  //           AssetImage(
+  //             'Assets/Images/google.png',
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           width: 20,
+  //         ),
+  //         _buildSocialBtn(
+  //           () => print('Login with Twitter'),
+  //           AssetImage(
+  //             'Assets/Images/twitter.png',
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

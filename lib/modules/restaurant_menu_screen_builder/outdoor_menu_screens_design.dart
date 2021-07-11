@@ -13,12 +13,12 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 
 // ignore: must_be_immutable
 class OutdoorMenuScreensCreator extends StatelessWidget {
-  var searchBarController;
+  // var searchBarController;
   List<SelectedItemsModel> selectedItems;
   RestaurantsModel restaurant;
 
   OutdoorMenuScreensCreator({
-    @required this.searchBarController,
+    // @required this.searchBarController,
     @required this.selectedItems,
     @required this.restaurant,
   });
@@ -68,7 +68,6 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        buildSearchBar(controller: searchBarController),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 50.0,
@@ -193,6 +192,7 @@ class OutdoorMenuScreensCreator extends StatelessWidget {
                         Container(
                           height: 110.0,
                           child: ListView.separated(
+                            physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return buildFilter(

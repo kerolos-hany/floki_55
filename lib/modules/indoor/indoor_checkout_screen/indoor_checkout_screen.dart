@@ -36,7 +36,7 @@ class IndoorCheckOut extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: AssetImage("Assets/Images/bck.jpeg"),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             )),
             child: Center(
               child: Padding(
@@ -177,7 +177,7 @@ class IndoorCheckOut extends StatelessWidget {
     AppCubit.get(context).emit(ChairsNumberState());
 
     AppCubit.get(context).orderNumber++;
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => HomeLayout(
@@ -211,7 +211,7 @@ class IndoorCheckOut extends StatelessWidget {
     AppCubit.get(context).emit(ChairsNumberState());
 
     AppCubit.get(context).orderNumber++;
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => HomeLayout(

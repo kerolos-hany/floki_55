@@ -13,7 +13,7 @@ import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart
 
 // ignore: must_be_immutable
 class IndoorMenuScreensCreator extends StatelessWidget {
-  var searchBarController;
+  // var searchBarController;
   RestaurantsModel restaurant;
   List<SelectedItemsModel> selectedItems;
   BuildContext context;
@@ -22,7 +22,7 @@ class IndoorMenuScreensCreator extends StatelessWidget {
 
   IndoorMenuScreensCreator({
     @required this.restaurant,
-    @required this.searchBarController,
+    // @required this.searchBarController,
     @required this.selectedItems,
     @required this.tableNumber,
   });
@@ -62,7 +62,6 @@ class IndoorMenuScreensCreator extends StatelessWidget {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          buildSearchBar(controller: searchBarController),
                           Container(
                               height: 110.0,
                               child: ListView.separated(

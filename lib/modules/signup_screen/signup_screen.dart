@@ -34,9 +34,10 @@ class SignupScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('Assets/Images/bck.jpeg'),
-                    fit: BoxFit.fill)),
+                    fit: BoxFit.cover)),
             child: Center(
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.85,
                   height: 600,
@@ -104,6 +105,9 @@ class SignupScreen extends StatelessWidget {
                                 if (value.isEmpty) {
                                   return "Email must not be empty!";
                                 }
+                                if(!value.toString().characters.contains("@") && !value.toString().characters.contains(".")) {
+                                    return "Emails must contain @ and .com!";
+                                  }
                                 return null;
                               }),
                           buildTextFormField(
@@ -119,6 +123,10 @@ class SignupScreen extends StatelessWidget {
                               if (value.isEmpty) {
                                 return "Password must not be empty!";
                               }
+                              if (value.toString().length < 6)
+                                {
+                                  return "Password must have more that 6 characters!";
+                                }
                               return null;
                             },
                             suffixIcon: isHidden
@@ -140,6 +148,10 @@ class SignupScreen extends StatelessWidget {
                               if (value.isEmpty) {
                                 return "You must confirm your password!";
                               }
+                              if(value.toString() != password)
+                                {
+                                  return "Password is unmatched!";
+                                }
                               return null;
                             },
                             suffixIcon: isHiddenConfirm
@@ -206,15 +218,16 @@ class SignupScreen extends StatelessWidget {
   }
 
   void userRegister() {
+
     if (formKeySignup.currentState.validate()) {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+          email: email, password: password)
+          .then((value) {
+      }).catchError((error) {
+        print("Error $error caught!");
+      });
       Navigator.pushReplacementNamed(context, LoginScreen.route);
     }
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-        email: email, password: password)
-        .then((value) {
-      print(value.user.email);
-      print(value.user.uid);
-    }).catchError((error) {});
   }
 }

@@ -35,7 +35,7 @@ class OutdoorCheckOut extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: AssetImage("Assets/Images/bck.jpeg"),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             )),
             child: Center(
               child: Padding(
@@ -171,7 +171,6 @@ class OutdoorCheckOut extends StatelessWidget {
     print("Visa");
 
     if (AppCubit.get(context).takeAway) {
-      print("takeaway");
       takeAwayStatus = "Takeaway";
     } else {
       takeAwayStatus = "Indoor";
@@ -190,7 +189,7 @@ class OutdoorCheckOut extends StatelessWidget {
       AppCubit.get(context).emit(ChairsNumberState());
     }
 
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => HomeLayout(
@@ -204,6 +203,7 @@ class OutdoorCheckOut extends StatelessWidget {
       if(element.itemCount > 0)
       {
         element.itemCount = 0;
+        AppCubit.get(context).emit(RestaurantItemsState());
       }
     }));
   }

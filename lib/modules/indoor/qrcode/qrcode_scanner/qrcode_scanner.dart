@@ -15,7 +15,6 @@ class QrCodeScanner extends StatefulWidget {
 class _QrCodeScannerState extends State<QrCodeScanner> {
   var qrKey = GlobalKey(debugLabel: 'QR');
 
-  Barcode barcode;
   BuildContext context;
   QRViewController qrController;
   String branchIndexString;
@@ -59,7 +58,6 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
           qrController = controller;
         });
         qrController.scannedDataStream.listen((barcode) {
-          this.barcode = barcode;
           resultBarCode = barcode.code;
           print(resultBarCode);
           _qrCodeTableNumber(resultBarCode);
@@ -88,7 +86,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     } on Exception catch (e) {
       scanned = true;
       print("Error $e found");
-      Navigator.pushNamed(context, QrCodeErrorScreen.route).then((value) {
+      Navigator.pushReplacementNamed(context, QrCodeErrorScreen.route).then((value) {
         scanned = false;
       });
     }
@@ -107,7 +105,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     } on Exception catch (e) {
       scanned = true;
       print("Error $e caught!");
-      Navigator.pushNamed(context, QrCodeErrorScreen.route).then((value) {
+      Navigator.pushReplacementNamed(context, QrCodeErrorScreen.route).then((value) {
         scanned = false;
       });
     }
@@ -118,7 +116,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
     if (!scanned) {
       scanned = true;
-      Navigator.pushNamed(context,
+      Navigator.pushReplacementNamed(context,
               "/LoginScreen/HomeScreen/${chosenRestaurant.name}${chosenRestaurant.branchName}IndoorMenu/",
               arguments: orderTableNumber,)
           .then((value) {

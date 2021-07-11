@@ -24,7 +24,7 @@ class McdonaldsSheratonIndoorMenu extends StatelessWidget {
       // child:
       IndoorMenuScreensCreator(
         tableNumber: orderTableNumber,
-        searchBarController: searchBarController,
+        // searchBarController: searchBarController,
         selectedItems: selectedItems,
         restaurant: restaurant,
       // ),

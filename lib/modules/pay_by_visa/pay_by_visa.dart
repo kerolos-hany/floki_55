@@ -34,7 +34,7 @@ class PayByVisaScreen extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("Assets/Images/bck.jpeg"),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
           child: Center(

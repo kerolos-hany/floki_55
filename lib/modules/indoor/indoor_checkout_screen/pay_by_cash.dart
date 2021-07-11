@@ -15,34 +15,38 @@ class PayByCash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildOrderDetails(
-            context: context,
-            selectedItems: selectedItems,
-          ),
-          SizedBox(height: 50,),
-          Text(
-            "Order number:",
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 150,),
+            buildOrderDetails(
+              context: context,
+              selectedItems: selectedItems,
             ),
-          ),
-          SizedBox(height: 30,),
-          Text(
-            "# $orderNumber",
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
+            SizedBox(height: 50,),
+            Text(
+              "Order number:",
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: 30,),
+            Text(
+              "# $orderNumber",
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

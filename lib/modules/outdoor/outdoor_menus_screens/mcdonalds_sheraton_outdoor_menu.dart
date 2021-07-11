@@ -1,23 +1,22 @@
 import 'package:floki/models/restaurants_model.dart';
 import 'package:floki/models/selected_items_model.dart';
 import 'package:floki/modules/restaurant_menu_screen_builder/outdoor_menu_screens_design.dart';
-import 'package:floki/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class McdonaldsSheratonOutdoorMenu extends StatelessWidget {
   static String route = "/LoginScreen/HomeScreen/McdonaldsSheratonOutdoorMenu/";
-  var searchBarController = TextEditingController();
+  // var searchBarController = TextEditingController();
   List<SelectedItemsModel> selectedItems = [];
-  BuildContext context;
+  // BuildContext context;
   RestaurantsModel restaurant = RestaurantsModel.restaurants[0];
 
   @override
   Widget build(BuildContext context) {
-    this.context = context;
+    // this.context = context;
     return OutdoorMenuScreensCreator(
       selectedItems: selectedItems,
-      searchBarController: searchBarController,
+      // searchBarController: searchBarController,
       restaurant: restaurant,
     );
   }

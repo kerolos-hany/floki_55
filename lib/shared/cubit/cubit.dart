@@ -59,21 +59,17 @@ class AppCubit extends Cubit<AppCubitStates> {
   void removeItem (MenuItemModel item){
     if (item.itemCount > 0) {
       item.itemCount--;
-      print(item.itemCount);
       emit(MenuRemoveItemState());
     }
   }
-
   void addItem (MenuItemModel item){
       item.itemCount++;
-      print(item.itemCount);
       emit(MenuAddItemState());
   }
 
   bool takeAway = false;
   int chairsNumber = 1;
   int tablesNumber = 1;
-  Widget tableCounterRow;
   Color counterColor = secondaryColor; //Colors.black38;
   Color color = Color(0xff170b66); //Colors.black38;
   Color iconsColor = Color(0xff170b66); //Colors.black38;

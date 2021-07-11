@@ -43,47 +43,47 @@ Widget buildTextFormField({
   );
 }
 
-Widget buildSearchBar({@required controller}) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 20.0),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Center(
-        child: Container(
-          width: 350,
-          height: 30,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.4),
-                  spreadRadius: 2,
-                  blurRadius: 1,
-                  offset: Offset(0, 2)),
-            ],
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 2.0),
-            child: TextFormField(
-              style: TextStyle(fontSize: 17.5, fontWeight: FontWeight.w400),
-              cursorHeight: 25.0,
-              cursorColor: Colors.yellow,
-              controller: controller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.yellow[600],
-                  size: 32,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ]),
-  );
-}
+// Widget buildSearchBar({@required controller}) {
+//   return Padding(
+//     padding: const EdgeInsets.only(bottom: 20.0),
+//     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//       Center(
+//         child: Container(
+//           width: 350,
+//           height: 30,
+//           decoration: BoxDecoration(
+//             boxShadow: [
+//               BoxShadow(
+//                   color: Colors.black.withOpacity(0.4),
+//                   spreadRadius: 2,
+//                   blurRadius: 1,
+//                   offset: Offset(0, 2)),
+//             ],
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(15.0),
+//           ),
+//           child: Padding(
+//             padding: const EdgeInsets.only(bottom: 2.0),
+//             child: TextFormField(
+//               style: TextStyle(fontSize: 17.5, fontWeight: FontWeight.w400),
+//               cursorHeight: 25.0,
+//               cursorColor: Colors.yellow,
+//               controller: controller,
+//               decoration: InputDecoration(
+//                 border: InputBorder.none,
+//                 prefixIcon: Icon(
+//                   Icons.search,
+//                   color: Colors.yellow[600],
+//                   size: 32,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     ]),
+//   );
+// }
 
 Widget buildFilter({@required context,@required FilterModel filter,@required RestaurantsModel restaurant}) {
   return GestureDetector(
@@ -286,32 +286,35 @@ Widget buildMenuItem({@required MenuItemModel item,
 }
 
 Widget buildErrorScreen(String text, context) {
-  return Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            child: Text(
-              text,
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold),
+  return SingleChildScrollView(
+    physics: BouncingScrollPhysics(),
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: Text(
+                text,
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 80,
-          ),
-          Icon(
-            Icons.error_outline,
-            color: Theme.of(context).primaryColor,
-            size: 250,
-          ),
-        ],
+            SizedBox(
+              height: 80,
+            ),
+            Icon(
+              Icons.error_outline,
+              color: Theme.of(context).primaryColor,
+              size: 250,
+            ),
+          ],
+        ),
       ),
     ),
   );
