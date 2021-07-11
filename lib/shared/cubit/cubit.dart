@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floki/models/filters_model.dart';
 import 'package:floki/models/menu_items_model.dart';
 import 'package:floki/models/restaurants_model.dart';
@@ -123,4 +124,28 @@ class AppCubit extends Cubit<AppCubitStates> {
   Future.delayed(Duration(days: 1), () {
   orderNumber = 0;
   });}
+
+  String loginError = "";
+  void userLogin({
+    @required String email,
+    @required String password,
+  }) {
+    emit(LoginLoadingState());
+
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    )
+        .then((value) {
+      print(value.user.email);
+      print(value.user.uid);
+      emit(LoginSuccessState(value.user.uid));
+    })
+        .catchError((error)
+    {
+      loginError = error.toString();
+      emit(LoginErrorState(error.toString()));
+    });
+  }
 }

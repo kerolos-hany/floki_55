@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:floki/modules/first_screen/first_screen.dart';
 import 'package:floki/modules/signup_screen/signup_screen.dart';
+import 'package:floki/shared/catch_helper.dart';
 import 'package:floki/shared/components/components.dart';
+import 'package:floki/shared/components/constants.dart';
 import 'package:floki/shared/cubit/cubit.dart';
 import 'package:floki/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,34 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppCubitStates> (
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is LoginSuccessState)
+        {
+          CacheHelper.saveData(
+            key: 'uId',
+            value: state.uId,
+          );
+          Navigator.pushReplacementNamed(context, FirstScreen.route);
+        }
+        if(state is LoginErrorState)
+          {
+            showDialog(context: context, builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+              content: Text(AppCubit.get(context).loginError),
+              contentTextStyle: TextStyle(
+                color: secondaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              backgroundColor: Theme.of(context)
+                  .primaryColor
+                  .withOpacity(.9),
+            ),
+            );
+          }
+      },
       builder: (context, state) {
         this.context = context;
         return Scaffold(
@@ -153,12 +181,7 @@ class LoginScreen extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         onPressed: () {
           if (formKey.currentState.validate()) {
-            FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
-                .then((value) => value)
-                .catchError((error) {
-              print("Error $error caught!");
-            }) ;
-            Navigator.pushReplacementNamed(context, FirstScreen.route);
+            AppCubit.get(context).userLogin(email: emailController.text,password: passwordController.text);
           }
         },
         child: Text("Log In",
